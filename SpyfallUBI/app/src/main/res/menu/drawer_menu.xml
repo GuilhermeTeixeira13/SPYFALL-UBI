@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view"
+    android:id="@+id/drawer_menu">
+
+
+    <group android:checkableBehavior="single">
+        <item android:id="@+id/nav_rules"
+            android:icon="@drawable/menu_icon"
+            android:title="Rules"/>
+        <item android:id="@+id/nav_ubiinfo"
+            android:icon="@drawable/school_icon"
+            android:title="UBI"/>
+        <item android:id="@+id/nav_personalinfo"
+            android:icon="@drawable/personinfo_icon"
+            android:title="Developer's Info"/>
+    </group>
+</menu>
