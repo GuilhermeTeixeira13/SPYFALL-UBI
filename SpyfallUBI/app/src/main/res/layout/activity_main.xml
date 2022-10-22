@@ -6,6 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity"
+    tools:openDrawer="start"
     android:gravity="center"
     android:fitsSystemWindows="true"
     android:id="@+id/drawer_layout">
@@ -16,10 +17,10 @@
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/side_menu"
+            android:id="@+id/toolbar_landing_page"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:elevation="4dp"
+            android:layout_height="56dp"
+            android:background="@color/darkBlue_buttons"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
@@ -44,9 +45,6 @@
         android:layout_height="match_parent"
         tools:context=".MainActivity">
 
-        <include
-            android:id="@+id/include"
-            layout="@layout/toolbar_landing_page" />
 
         <ImageView
             android:layout_width="169dp"
