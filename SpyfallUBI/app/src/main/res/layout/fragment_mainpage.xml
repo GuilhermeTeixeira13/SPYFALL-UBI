@@ -29,7 +29,8 @@
         android:textSize="17dp"
         android:textColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:onClick="goToLobby"/>
 
     <TextView
         android:layout_width="match_parent"

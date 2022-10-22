@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
 import androidx.annotation.NonNull;
 
 import com.google.android.material.navigation.NavigationView;
@@ -58,6 +60,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
                 startActivity(Intent.createChooser(sharingIntent, "Share using:"));
                 break;
+            case R.id.closeButton:
+                // Mostrar aviso se queremos mesmo voltar à página inicial
+                // Caso já estejamos na principal, então perguntar se queremos mesmo sair da app
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new MainPageFragment()).commit();
+                break;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -85,5 +93,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void goToLobby(View v) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new LobbyActivity()).commit();
     }
 }
