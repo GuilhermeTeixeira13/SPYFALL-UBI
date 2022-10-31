@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".LobbyActivity">
 
     <include
@@ -40,7 +41,7 @@
 
         <EditText
             android:id="@+id/add_player_name"
-            android:layout_width="250dp"
+            android:layout_width="290dp"
             android:layout_height="40dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/rounded_corners_edtext"
@@ -69,12 +70,89 @@
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_black"
         android:text="List of Players"
         android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintBottom_toTopOf="@id/players_list"
         app:layout_constraintTop_toBottomOf="@id/include_toolbar" />
+
+    <View
+        android:id="@+id/horizontal_line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="48dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/relativeLayout" />
+
+    <CheckBox
+        android:id="@+id/checkBoxUBI"
+        android:layout_width="170dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="10dp"
+        android:checked="true"
+        android:fontFamily="@font/roboto_black"
+        android:gravity="center"
+        android:onClick="checkBoxClick"
+        android:text="Play in UBI and Covilhã"
+        android:textAlignment="center"
+        app:layout_constraintCircleRadius="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_line1" />
+
+    <TextView
+        android:id="@+id/number_of_spies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:fontFamily="@font/roboto_black"
+        android:text="Number of spies: 0"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+        app:layout_constraintBottom_toTopOf="@id/horizontal_line2"
+        app:layout_constraintCircleRadius="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkBoxUBI" />
+
+    <View
+        android:id="@+id/horizontal_line2"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/checkBoxUBI" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BtnStartGame"
+        android:layout_width="181dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="START GAME"
+        android:textSize="17dp"
+        android:textColor="@color/white"
+        android:background="@drawable/rounded_corners_buttons"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_line2"
+        android:onClick="StartGame"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

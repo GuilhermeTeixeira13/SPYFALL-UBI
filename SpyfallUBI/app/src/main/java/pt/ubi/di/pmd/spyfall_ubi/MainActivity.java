@@ -63,17 +63,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(Intent.createChooser(sharingIntent, "Share using:"));
                 break;
             case R.id.closeButton:
-                FragmentManager fm =  getSupportFragmentManager();
-                Fragment fragInstance = fm.findFragmentById(R.id.fragment_container);
-
-                if (fragInstance instanceof MainPageFragment){
-                    // Ask if we want to leave the app
-                }
-                else{
-                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                            new MainPageFragment()).commit();
-                }
-
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainPageFragment()).commit();
                 break;
         }
         return super.onOptionsItemSelected(item);

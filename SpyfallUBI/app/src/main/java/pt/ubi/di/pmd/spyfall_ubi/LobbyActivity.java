@@ -1,5 +1,7 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,21 +11,26 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
 public class LobbyActivity extends AppCompatActivity {
     ListView playersList;
     EditText EdText_player_name;
+    CheckBox checkbox_ubi;
     ImageButton Btn_add_player;
     ArrayList<String> arrList_players;
     ArrayAdapter<String> adapter;
+    Boolean checkbox_result;
+    Integer numberOfSpies;
+    TextView textNumberSpies;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,22 +42,41 @@ public class LobbyActivity extends AppCompatActivity {
         Btn_add_player = findViewById(R.id.btn_add_player);
         playersList = findViewById(R.id.players_list);
         EdText_player_name = findViewById(R.id.add_player_name);
+        checkbox_ubi = findViewById(R.id.checkBoxUBI);
+        textNumberSpies = findViewById(R.id.number_of_spies);
 
         arrList_players = new ArrayList<>();
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arrList_players);
-
         playersList.setAdapter(adapter);
 
-    }
+        playersList.setOnItemLongClickListener( new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-    public void addToList (View v){
-        arrList_players.add(EdText_player_name.getText().toString());
-        adapter.notifyDataSetChanged();
+                final int itemToDelete = i;
+
+                new AlertDialog.Builder(LobbyActivity.this)
+                        .setIcon(android.R.drawable.ic_delete)
+                        .setTitle("Are you sure?")
+                        .setMessage("Do you want to delete this item?")
+                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                arrList_players.remove(itemToDelete);
+                                adapter.notifyDataSetChanged();
+                                updateNumberOfSpies();
+                            }
+                        })
+                        .setNegativeButton("No!", null)
+                        .show();
+                return true;
+            }
+        });
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_landing_page, menu);
+        getMenuInflater().inflate(R.menu.toolbar_rest, menu);
         return true;
     }
 
@@ -67,11 +93,63 @@ public class LobbyActivity extends AppCompatActivity {
                 startActivity(Intent.createChooser(sharingIntent, "Share using:"));
                 break;
             case R.id.closeButton:
-                // Ask if we want to end the game
-
-                finish();
+                new AlertDialog.Builder(LobbyActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle("Are you sure?")
+                        .setMessage("Do you want end the current game and go back to the main page?")
+                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("No!", null)
+                        .show();
                 break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void updateNumberOfSpies(){
+        if (arrList_players.isEmpty()) {
+            numberOfSpies = 0;
+        }
+        else if (arrList_players.size() < 6) {
+            numberOfSpies = 1;
+        }
+        else {
+            numberOfSpies = 2;
+        }
+        textNumberSpies.setText("Number of spies: "+String.valueOf(numberOfSpies));
+    }
+
+    public void addToList (View v){
+        arrList_players.add(EdText_player_name.getText().toString());
+        adapter.notifyDataSetChanged();
+        updateNumberOfSpies();
+    }
+
+    public void checkBoxClick (View v){
+        if (checkbox_ubi.isChecked()) {
+            checkbox_result = true;
+            System.out.println(checkbox_result);
+        } else {
+            checkbox_result = false;
+            System.out.println(checkbox_result);
+        }
+    }
+
+    public void StartGame (View v){
+        if (arrList_players.size() < 4) {
+            new AlertDialog.Builder(LobbyActivity.this)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setTitle("Can't proceed!")
+                    .setMessage("It is necessary at least 4 players to start the game!")
+                    .setNeutralButton("Got it!", null)
+                    .show();
+        }else {
+            Intent goToWhoAreYouIntent = new Intent(this, WhoAreYouActivity.class);
+            startActivity(goToWhoAreYouIntent);
+        }
     }
 }
