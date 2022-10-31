@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import com.google.android.material.navigation.NavigationView;
 
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar sideMenu = findViewById(R.id.toolbar_landing_page);
+        Toolbar sideMenu = findViewById(R.id.toolbar);
         setSupportActionBar(sideMenu);
 
         drawer = findViewById(R.id.side_menu);
@@ -61,10 +63,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 startActivity(Intent.createChooser(sharingIntent, "Share using:"));
                 break;
             case R.id.closeButton:
-                // Mostrar aviso se queremos mesmo voltar à página inicial
-                // Caso já estejamos na principal, então perguntar se queremos mesmo sair da app
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new MainPageFragment()).commit();
+                FragmentManager fm =  getSupportFragmentManager();
+                Fragment fragInstance = fm.findFragmentById(R.id.fragment_container);
+
+                if (fragInstance instanceof MainPageFragment){
+                    // Ask if we want to leave the app
+                }
+                else{
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            new MainPageFragment()).commit();
+                }
+
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -96,7 +105,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void goToLobby(View v) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                new LobbyActivity()).commit();
+        Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
+        startActivity(goToLobbyIntent);
     }
 }

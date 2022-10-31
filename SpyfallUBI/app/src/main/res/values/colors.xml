@@ -9,4 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="blue_toolbar">#2196f3</color>
     <color name="darkBlue_buttons">#435962</color>
+    <color name="gray_edText">#747d87</color>
 </resources>

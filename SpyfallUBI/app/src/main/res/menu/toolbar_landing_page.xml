@@ -10,8 +10,8 @@
 
     <item
         android:id="@+id/closeButton"
-        android:icon="@drawable/close_icon"
-        android:title="SHARE"
+        android:icon="@drawable/home_icon"
+        android:title="HOME"
         app:showAsAction="ifRoom" />
 
 </menu>

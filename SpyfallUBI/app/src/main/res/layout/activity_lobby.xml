@@ -1,13 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    tools:context=".LobbyActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/tool_bar"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="Lobby"
-        android:textSize="30sp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="288dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/add_player_name"
+            android:layout_width="250dp"
+            android:layout_height="40dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/rounded_corners_edtext"
+            android:inputType="textPersonName"
+            android:paddingLeft="20dp"
+            android:paddingEnd="20dp"
+            android:paddingRight="20dp"
+            android:text="New player name"
+            android:textAlignment="viewStart"
+            android:textColor="@color/white"
+            android:textSize="17dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"></EditText>
+
+        <ImageButton
+            android:id="@+id/button1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignEnd="@id/add_player_name"
+            android:layout_alignRight="@id/add_player_name"
+            android:layout_marginRight="15dp"
+            android:layout_centerVertical="true"
+            android:background="@drawable/add_icon"
+            android:text="Button" />
+    </RelativeLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
