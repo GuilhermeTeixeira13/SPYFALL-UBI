@@ -6,13 +6,24 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ListView;
+
+import java.util.ArrayList;
 
 public class LobbyActivity extends AppCompatActivity {
+    ListView playersList;
+    EditText EdText_player_name;
+    ImageButton Btn_add_player;
+    ArrayList<String> arrList_players;
+    ArrayAdapter<String> adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -20,6 +31,21 @@ public class LobbyActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Btn_add_player = findViewById(R.id.btn_add_player);
+        playersList = findViewById(R.id.players_list);
+        EdText_player_name = findViewById(R.id.add_player_name);
+
+        arrList_players = new ArrayList<>();
+        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arrList_players);
+
+        playersList.setAdapter(adapter);
+
+    }
+
+    public void addToList (View v){
+        arrList_players.add(EdText_player_name.getText().toString());
+        adapter.notifyDataSetChanged();
     }
 
     @Override
