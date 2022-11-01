@@ -7,19 +7,44 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.util.ArrayList;
+
 public class WhoAreYouActivity extends AppCompatActivity {
+    ArrayList<Player> players;
+    Place place;
+    Integer player_visualizing;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whoareyou);
 
+        Intent intent = getIntent();
+        String checkFlag= intent.getStringExtra("flag");
+
+        if(checkFlag.equals("FROM_LOBBY")){
+            System.out.println("FROM_LOBBY");
+            players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
+            place = (Place) getIntent().getSerializableExtra("PLACE");
+            player_visualizing = 0;
+        }
+        else if(checkFlag.equals("FROM_WHOAREYOURESULT")){
+            player_visualizing = (Integer) getIntent().getIntExtra("PLAYER_VISUALIZING", 0);
+            players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
+            place = (Place) getIntent().getSerializableExtra("PLACE");
+        }
+
+        TextView txtViewPlayerName = (TextView) findViewById(R.id.textViewPlayerName);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+
         setSupportActionBar(toolbar);
+
+        txtViewPlayerName.setText(players.get(player_visualizing).getName());
     }
 
     @Override
@@ -62,6 +87,10 @@ public class WhoAreYouActivity extends AppCompatActivity {
 
     public void whoAreYouResult (View v){
         Intent goToWhoAreYouResultIntent = new Intent(this, WhoAreYouResultActivity.class);
+        goToWhoAreYouResultIntent.putExtra("flag", "FROM_WHOAREYOU");
+        goToWhoAreYouResultIntent.putExtra("PLAYERS", players);
+        goToWhoAreYouResultIntent.putExtra("PLACE", place);
+        goToWhoAreYouResultIntent.putExtra("PLAYER_VISUALIZING", player_visualizing);
         startActivity(goToWhoAreYouResultIntent);
     }
 

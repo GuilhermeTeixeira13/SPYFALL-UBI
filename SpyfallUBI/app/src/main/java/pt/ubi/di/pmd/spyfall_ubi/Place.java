@@ -1,6 +1,8 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
-public class Place {
+import java.io.Serializable;
+
+public class Place implements Serializable {
     String name;
     String imagePath;
     String info;
@@ -9,6 +11,30 @@ public class Place {
         this.name = name;
         this.imagePath = imagePath;
         this.info = info;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public void setInfo(String info) {
+        this.info = info;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public String getInfo() {
+        return info;
     }
 
     @Override

@@ -49,6 +49,8 @@ public class LobbyActivity extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arrList_players);
         playersList.setAdapter(adapter);
 
+        checkbox_result = true;
+
         playersList.setOnItemLongClickListener( new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -185,13 +187,16 @@ public class LobbyActivity extends AppCompatActivity {
         ArrayList<Place> places = new ArrayList<Place>();
 
         if (UBIPlaces) {
-            places.add(new Place("Library", "@drawable/", ""));
-            places.add(new Place("Biblioteca", "@drawable/", ""));
-            places.add(new Place("Biblioteca", "@drawable/", ""));
-            places.add(new Place("Biblioteca", "@drawable/", ""));
-            places.add(new Place("Biblioteca", "@drawable/", ""));
-            places.add(new Place("Biblioteca", "@drawable/", ""));
-            places.add(new Place("Biblioteca", "@drawable/", ""));
+            places.add(new Place("UBI - Library", "@drawable/", ""));
+            places.add(new Place("UBI - Canteen", "@drawable/", ""));
+            places.add(new Place("UBI - Amphitheater 6.01", "@drawable/", ""));
+            places.add(new Place("UBI - Philosophers Tour", "@drawable/", ""));
+            places.add(new Place("UBI - Faculty of Health Sciences", "@drawable/", ""));
+            places.add(new Place("UBI - Faculty of Engineering", "@drawable/", ""));
+            places.add(new Place("Covilhã - Cova da Beira University Hospital", "@drawable/", ""));
+            places.add(new Place("Covilhã - Serra Shopping", "@drawable/", ""));
+            places.add(new Place("Covilhã - Torre", "@drawable/", ""));
+            places.add(new Place("Covilhã - Wool museum", "@drawable/", ""));
         }
         else{
             places.add(new Place("Air Plane", "@drawable/", ""));
@@ -209,6 +214,10 @@ public class LobbyActivity extends AppCompatActivity {
         return places;
     }
 
+    public Place choosePlace(ArrayList<Place> gamePlaces){
+        return gamePlaces.get(getRandomNumber(0, gamePlaces.size()));
+    }
+
     public void StartGame (View v){
         if (arrList_players.size() < 4) {
             new AlertDialog.Builder(LobbyActivity.this)
@@ -219,9 +228,12 @@ public class LobbyActivity extends AppCompatActivity {
                     .show();
         }else {
             ArrayList<Player> players = setPlayersRoles(arrList_players);
-            System.out.println(players);
+            Place place = choosePlace(getPlaces(checkbox_result));
 
             Intent goToWhoAreYouIntent = new Intent(this, WhoAreYouActivity.class);
+            goToWhoAreYouIntent.putExtra("flag", "FROM_LOBBY");
+            goToWhoAreYouIntent.putExtra("PLAYERS", players);
+            goToWhoAreYouIntent.putExtra("PLACE", place);
             startActivity(goToWhoAreYouIntent);
         }
     }

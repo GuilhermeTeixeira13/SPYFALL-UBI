@@ -1,11 +1,29 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
-public class Player {
+import java.io.Serializable;
+
+public class Player implements Serializable {
     String name;
     Integer role;
 
     public Player(String name, Integer role) {
         this.name = name;
+        this.role = role;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getRole() {
+        return role;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setRole(Integer role) {
         this.role = role;
     }
 
