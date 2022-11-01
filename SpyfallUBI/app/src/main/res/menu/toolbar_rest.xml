@@ -9,9 +9,8 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/closeButton"
-        android:icon="@drawable/back_icon"
+        android:id="@+id/homeButton"
+        android:icon="@drawable/home_icon"
         android:title="HOME"
         app:showAsAction="ifRoom" />
-
 </menu>

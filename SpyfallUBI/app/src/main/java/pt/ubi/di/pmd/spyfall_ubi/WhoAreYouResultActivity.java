@@ -12,11 +12,11 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-public class WhoAreYouActivity extends AppCompatActivity {
+public class WhoAreYouResultActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_whoareyou);
+        setContentView(R.layout.activity_whoareyouresult);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -43,7 +43,7 @@ public class WhoAreYouActivity extends AppCompatActivity {
             case R.id.homeButton:
                 // Ask if we want to the lobby and lose all the current page settings
 
-                new AlertDialog.Builder(WhoAreYouActivity.this)
+                new AlertDialog.Builder(WhoAreYouResultActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Are you going to the main page?")
                         .setMessage("Do you want to lose the current game state and go back to the main page?")
@@ -60,9 +60,9 @@ public class WhoAreYouActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void whoAreYouResult (View v){
-        Intent goToWhoAreYouResultIntent = new Intent(this, WhoAreYouResultActivity.class);
-        startActivity(goToWhoAreYouResultIntent);
+    public void whoAreYou (View v){
+        Intent goToWhoAreYouIntent = new Intent(this, WhoAreYouActivity.class);
+        startActivity(goToWhoAreYouIntent);
     }
 
     public void goToMainActivity () {

@@ -92,7 +92,7 @@ public class LobbyActivity extends AppCompatActivity {
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
                 startActivity(Intent.createChooser(sharingIntent, "Share using:"));
                 break;
-            case R.id.closeButton:
+            case R.id.homeButton:
                 new AlertDialog.Builder(LobbyActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Are you sure?")
@@ -139,6 +139,76 @@ public class LobbyActivity extends AppCompatActivity {
         }
     }
 
+    public int getRandomNumber(int min, int max) {
+        return (int) ((Math.random() * (max - min)) + min);
+    }
+
+    public ArrayList<Player> setPlayersRoles(ArrayList<String> playersList){
+        int i = 0;
+        int posFirstSpy  = 0;
+        int posSecondSpy = 0;
+        ArrayList<Player> players = new ArrayList<Player>();
+
+        posFirstSpy = getRandomNumber(0, playersList.size());
+        if (numberOfSpies > 1) {
+            do{
+                posSecondSpy = getRandomNumber(0, playersList.size());
+            }while(posSecondSpy == posFirstSpy );
+
+            for (i=0; i<playersList.size(); i++){
+                if (i == posFirstSpy ) {
+                    players.add(new Player(playersList.get(i), 1));
+                }
+                else if (i == posSecondSpy) {
+                    players.add(new Player(playersList.get(i), 1));
+                }
+                else{
+                    players.add(new Player(playersList.get(i), 0));
+                }
+            }
+        }
+        else {
+            for (i=0; i<playersList.size(); i++){
+                if (i == posFirstSpy ) {
+                    players.add(new Player(playersList.get(i), 1));
+                }
+                else{
+                    players.add(new Player(playersList.get(i), 0));
+                }
+            }
+        }
+
+        return players;
+    }
+
+    public ArrayList<Place> getPlaces(Boolean UBIPlaces){
+        ArrayList<Place> places = new ArrayList<Place>();
+
+        if (UBIPlaces) {
+            places.add(new Place("Library", "@drawable/", ""));
+            places.add(new Place("Biblioteca", "@drawable/", ""));
+            places.add(new Place("Biblioteca", "@drawable/", ""));
+            places.add(new Place("Biblioteca", "@drawable/", ""));
+            places.add(new Place("Biblioteca", "@drawable/", ""));
+            places.add(new Place("Biblioteca", "@drawable/", ""));
+            places.add(new Place("Biblioteca", "@drawable/", ""));
+        }
+        else{
+            places.add(new Place("Air Plane", "@drawable/", ""));
+            places.add(new Place("Beach", "@drawable/", ""));
+            places.add(new Place("Supermarket", "@drawable/", ""));
+            places.add(new Place("Restaurant", "@drawable/", ""));
+            places.add(new Place("Hospital", "@drawable/", ""));
+            places.add(new Place("School", "@drawable/", ""));
+            places.add(new Place("Zoo", "@drawable/", ""));
+            places.add(new Place("Bank", "@drawable/", ""));
+            places.add(new Place("Night Club", "@drawable/", ""));
+            places.add(new Place("Space Station", "@drawable/", ""));
+        }
+
+        return places;
+    }
+
     public void StartGame (View v){
         if (arrList_players.size() < 4) {
             new AlertDialog.Builder(LobbyActivity.this)
@@ -148,6 +218,9 @@ public class LobbyActivity extends AppCompatActivity {
                     .setNeutralButton("Got it!", null)
                     .show();
         }else {
+            ArrayList<Player> players = setPlayersRoles(arrList_players);
+            System.out.println(players);
+
             Intent goToWhoAreYouIntent = new Intent(this, WhoAreYouActivity.class);
             startActivity(goToWhoAreYouIntent);
         }

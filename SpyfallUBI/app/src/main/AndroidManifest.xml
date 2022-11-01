@@ -34,6 +34,10 @@
             android:name=".WhoAreYouActivity"
             android:label="@string/WhoAreYou">
         </activity>
+        <activity
+            android:name=".WhoAreYouResultActivity"
+            android:label="@string/WhoAreYou">
+        </activity>
     </application>
 
 </manifest>

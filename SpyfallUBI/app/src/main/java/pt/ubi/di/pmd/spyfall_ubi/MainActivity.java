@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
                 startActivity(Intent.createChooser(sharingIntent, "Share using:"));
                 break;
-            case R.id.closeButton:
+            case R.id.homeButton:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainPageFragment()).commit();
                 break;
         }
