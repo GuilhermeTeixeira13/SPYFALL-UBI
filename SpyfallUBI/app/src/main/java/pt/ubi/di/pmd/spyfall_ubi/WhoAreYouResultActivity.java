@@ -1,18 +1,28 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
+import static java.security.AccessController.getContext;
+
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class WhoAreYouResultActivity extends AppCompatActivity {
@@ -37,7 +47,10 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
         TextView txtViewlocationName = (TextView) findViewById(R.id.locationName);
         TextView txtViewhelp = (TextView) findViewById(R.id.help);
         TextView txtViewPLocationSpyCard = (TextView) findViewById(R.id.textViewLocationSpyCard);
+        ImageView imageViewCard = (ImageView ) findViewById(R.id.imageViewLocation);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Button btn_info = (Button) findViewById(R.id.btn_know_more);
+        View view2 = (View) findViewById(R.id.view2);
         setSupportActionBar(toolbar);
 
         txtViewPlayerName.setText(players.get(player_visualizing).getName());
@@ -46,10 +59,21 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
             txtViewPLocationSpyCard.setText("Location card:");
             txtViewlocationName.setText(place.getName());
             txtViewhelp.setText("Figure out who the spy is.");
+            Uri path = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID +  "/drawable/"+place.getImagePath());
+            imageViewCard.setImageURI(path);
+
+            if(place.getCategory().equals("UBI")){
+                view2.getLayoutParams().height = (int) getResources().getDimension(R.dimen.view2_height);
+            }else{
+                btn_info.setVisibility(View.GONE);
+            }
         } else {
-            txtViewPLocationSpyCard.setText("You are a SPY!!");
-            txtViewlocationName.setText("Spy");
+            txtViewPLocationSpyCard.setText("Spy Card:");
+            txtViewlocationName.setText("The spy!");
+            txtViewlocationName.setTextSize(27);
             txtViewhelp.setText("Try to guess the rounds location.");
+            btn_info.setVisibility(View.GONE);
+            imageViewCard.setImageResource(R.drawable.spy2);
         }
     }
 

@@ -3,6 +3,7 @@ package pt.ubi.di.pmd.spyfall_ubi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -187,28 +188,28 @@ public class LobbyActivity extends AppCompatActivity {
         ArrayList<Place> places = new ArrayList<Place>();
 
         if (UBIPlaces) {
-            places.add(new Place("UBI - Library", "@drawable/", ""));
-            places.add(new Place("UBI - Canteen", "@drawable/", ""));
-            places.add(new Place("UBI - Amphitheater 6.01", "@drawable/", ""));
-            places.add(new Place("UBI - Philosophers Tour", "@drawable/", ""));
-            places.add(new Place("UBI - Faculty of Health Sciences", "@drawable/", ""));
-            places.add(new Place("UBI - Faculty of Engineering", "@drawable/", ""));
-            places.add(new Place("Covilhã - Cova da Beira University Hospital", "@drawable/", ""));
-            places.add(new Place("Covilhã - Serra Shopping", "@drawable/", ""));
-            places.add(new Place("Covilhã - Torre", "@drawable/", ""));
-            places.add(new Place("Covilhã - Wool museum", "@drawable/", ""));
+            places.add(new Place("UBI - Library", "ubi_library", "", "UBI"));
+            places.add(new Place("UBI - Canteen", "ubi_canteen", "", "UBI"));
+            places.add(new Place("UBI - Amphitheater 6.01", "ubi_amphitheater", "", "UBI"));
+            places.add(new Place("UBI - Philosophers Tour", "ubi_philosophers_tour", "", "UBI"));
+            places.add(new Place("UBI - Faculty of Health Sciences", "ubi_faculty_health_sciences", "", "UBI"));
+            places.add(new Place("UBI - Faculty of Engineering", "ubi_engineering_faculty", "", "UBI"));
+            places.add(new Place("Covilhã -  Hospital", "covilha_hospital", "", "UBI"));
+            places.add(new Place("Covilhã - Serra Shopping", "covilha_serra_shopping", "", "UBI"));
+            places.add(new Place("Covilhã - Torre", "covilha_torre", "", "UBI"));
+            places.add(new Place("Covilhã - Wool museum", "covilha_wool_museum", "", "UBI"));
         }
         else{
-            places.add(new Place("Air Plane", "@drawable/", ""));
-            places.add(new Place("Beach", "@drawable/", ""));
-            places.add(new Place("Supermarket", "@drawable/", ""));
-            places.add(new Place("Restaurant", "@drawable/", ""));
-            places.add(new Place("Hospital", "@drawable/", ""));
-            places.add(new Place("School", "@drawable/", ""));
-            places.add(new Place("Zoo", "@drawable/", ""));
-            places.add(new Place("Bank", "@drawable/", ""));
-            places.add(new Place("Night Club", "@drawable/", ""));
-            places.add(new Place("Space Station", "@drawable/", ""));
+            places.add(new Place("Air Plane", "air_plane", "", "OTHER"));
+            places.add(new Place("Beach","beach", "", "OTHER"));
+            places.add(new Place("Supermarket", "supermarket", "", "OTHER"));
+            places.add(new Place("Restaurant", "restaurant", "", "OTHER"));
+            places.add(new Place("Hospital", "hospital", "", "OTHER"));
+            places.add(new Place("School", "school", "", "OTHER"));
+            places.add(new Place("Zoo", "zoo", "", "OTHER"));
+            places.add(new Place("Bank", "bank", "", "OTHER"));
+            places.add(new Place("Night Club", "night_club", "", "OTHER"));
+            places.add(new Place("Space Station", "space_station", "", "OTHER"));
         }
 
         return places;

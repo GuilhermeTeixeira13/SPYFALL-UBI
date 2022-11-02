@@ -6,11 +6,17 @@ public class Place implements Serializable {
     String name;
     String imagePath;
     String info;
+    String category;
 
-    public Place(String name, String imagePath, String info) {
+    public Place(String name, String imagePath, String info, String category) {
         this.name = name;
         this.imagePath = imagePath;
         this.info = info;
+        this.category = category;
+    }
+
+    public void setCategory(String  category) {
+        this.category = category;
     }
 
     public void setName(String name) {
@@ -37,12 +43,17 @@ public class Place implements Serializable {
         return info;
     }
 
+    public String  getCategory() {
+        return category;
+    }
+
     @Override
     public String toString() {
         return "Place{" +
                 "name='" + name + '\'' +
                 ", imagePath='" + imagePath + '\'' +
                 ", info='" + info + '\'' +
+                ", cat=" + category +
                 '}';
     }
 }

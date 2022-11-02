@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="210dp"
         android:background="@drawable/rounded_corners_buttons"
-        android:text="Show me at I am"
+        android:text="Show me what I am"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="17dp"

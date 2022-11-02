@@ -113,9 +113,10 @@
 
     <ImageView
         android:id="@+id/imageViewLocation"
-        android:layout_width="180dp"
-        android:layout_height="150dp"
+        android:layout_width="190dp"
+        android:layout_height="170dp"
         android:layout_marginTop="35dp"
+        android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -123,10 +124,10 @@
 
     <TextView
         android:id="@+id/locationName"
-        android:layout_width="match_parent"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/roboto_black"
         android:text="Location/Spy"
         android:textAlignment="center"
         android:textColor="@color/black"
@@ -135,6 +136,23 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageViewLocation" />
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/btn_know_more"
+        android:layout_width="70dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/rounded_corners_buttons"
+        android:drawableStart="@drawable/learn_more_icon"
+        android:paddingStart="23dp"
+        android:textAllCaps="false"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/locationName" />
 
     <TextView
         android:id="@+id/help"
