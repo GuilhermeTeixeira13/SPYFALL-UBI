@@ -116,6 +116,12 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
             startActivity(goToWhoAreYouIntent);
         }else{
             // Go to Ready? Activity
+            Intent goToReadyIntent = new Intent(this, ReadyActivity.class);
+            goToReadyIntent.putExtra("flag","FROM_WHOAREYOURESULT");
+            goToReadyIntent.putExtra("PLAYERS", players);
+            goToReadyIntent.putExtra("PLACE", place);
+            startActivity(goToReadyIntent);
+            System.out.println("aqui");
         }
     }
 

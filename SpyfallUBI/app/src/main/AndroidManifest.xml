@@ -39,6 +39,10 @@
             android:name=".WhoAreYouResultActivity"
             android:label="@string/WhoAreYou">
         </activity>
+        <activity
+            android:name=".ReadyActivity"
+            android:label="@string/Ready">
+        </activity>
     </application>
 
 </manifest>
