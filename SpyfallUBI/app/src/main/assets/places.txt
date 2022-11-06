@@ -1,0 +1,20 @@
+UBI - Library/ubi_library/In June 2015, the Open Room was inaugurated at the Central Library, a space that is open 24 hours a day, seven days a week. Between 11:00 pm and 8:30 am, access control is done by swiping the UBI card in an electronic reader./UBI
+UBI - Canteen/ubi_canteen/Recently, the cantina da boavista was adapted to a residence./UBI
+UBI - Amphitheater 6.01/ubi_amphitheater/Located in Polo I, it has more than 210 seats./UBI
+UBI - Philosophers Tour/ubi_philosophers_tour/Small garden with benches, next to the Central Library. Where books are usually seen stuck on the walls, available to be taken by students./UBI
+UBI - Faculty of Health Sciences/ubi_faculty_health_sciences/The Faculty of Health Sciences (FCS) is a faculty that teaches courses in the health area, an integral part of the UBI. It was created in 1998 and started teaching activities in 2001 with the beginning of the Medicine course./UBI
+UBI - Faculty of Engineering/ubi_engineering_faculty/The Cessna T37 aircraft, which for about 30 years was placed in the parking lot of Polo I of the University of Beira Interior (UBI), is now on display at the entrance to the Faculty of Engineering./UBI
+Covilhã -  Hospital/covilha_hospital/In order to face the lack of conditions and the poor accessibility of the former Pêro da Covilhã hospital built in 1908, the CHCB was inaugurated on January 17, 2000./UBI
+Covilhã - Serra Shopping/covilha_serra_shopping/Serra Shopping opened in 2005. As for the architecture, it has the mountain as its theme and the elements associated with it, such as snow. The exterior follows a line of volumes, in materials such as stone, wood and glass, while in the interior the emphasis is on the wooden details, with the rustic prevailing./UBI
+Covilhã - Torre/covilha_torre/The "Torre" is the highest point in Portugal Continental with 2000 meters high. It is famous for snowfall during the winter months, attracting large numbers of tourists. During the summer, on clear days, the view can go all the way to the sea, with the Figueira da Foz area in the distance./UBI
+Covilhã - Wool museum/covilha_wool_museum/At the Wool Museum, it is possible to get to know one of the oldest industries, that of wool, which began by asserting itself as a pure act of survival of the human species and has assumed, over time, a growing quality and technical-artistic expression. , which has accompanied the development of our societies up to the present./UBI
+Air Plane/air_plane/ /OTHER
+Beach/beach/ /OTHER
+Supermarket/supermarket/ /OTHER
+Restaurant/restaurant/ /OTHER
+Hospital/hospital/ /OTHER
+School/school/ /OTHER
+Zoo/zoo/ /OTHER
+Bank/bank/ /OTHER
+Night Club/night_club/ /OTHER
+Space Station/space_station/ /OTHER

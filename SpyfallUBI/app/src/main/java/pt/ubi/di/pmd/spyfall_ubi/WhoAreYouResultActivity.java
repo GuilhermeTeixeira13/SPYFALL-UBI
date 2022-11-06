@@ -1,14 +1,8 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
-import static java.security.AccessController.getContext;
-
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -17,12 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
-import java.io.File;
 import java.util.ArrayList;
 
 public class WhoAreYouResultActivity extends AppCompatActivity {
@@ -131,5 +122,14 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
     public void goToMainActivity () {
         Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(goToMainActivityIntent);
+    }
+
+    public void showLocationInfo (View v) {
+        new AlertDialog.Builder(WhoAreYouResultActivity.this)
+                .setIcon(android.R.drawable.ic_dialog_info)
+                .setTitle(place.getName())
+                .setMessage(place.getInfo())
+                .setPositiveButton("Got it!", null)
+                .show();
     }
 }

@@ -20,7 +20,14 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class LobbyActivity extends AppCompatActivity {
     ListView playersList;
@@ -184,32 +191,45 @@ public class LobbyActivity extends AppCompatActivity {
         return players;
     }
 
-    public ArrayList<Place> getPlaces(Boolean UBIPlaces){
+    public ArrayList<Place> readPlaces(String filepath, String category) throws IOException {
+        BufferedReader reader = null;
         ArrayList<Place> places = new ArrayList<Place>();
+        String[] parts;
+
+        try {
+            reader = new BufferedReader(new InputStreamReader(getAssets().open(filepath)));
+            String line = reader.readLine();
+
+            while(line != null){
+                parts = line.split("/");
+
+                String name = parts[0];
+                String imagePath = parts[1];
+                String info = parts[2];
+                String cat = parts[3];
+
+                if (cat.equals(category)) {
+                    Place newPlace = new Place(name, imagePath, info, cat);
+                    places.add(newPlace);
+                }
+
+                line = reader.readLine();
+            }
+        } catch (IOException e) {
+            System.out.println("File not found.");
+        }
+
+        return places;
+    }
+
+    public ArrayList<Place> getPlaces(Boolean UBIPlaces) throws IOException {
+        ArrayList<Place> places;
 
         if (UBIPlaces) {
-            places.add(new Place("UBI - Library", "ubi_library", "", "UBI"));
-            places.add(new Place("UBI - Canteen", "ubi_canteen", "", "UBI"));
-            places.add(new Place("UBI - Amphitheater 6.01", "ubi_amphitheater", "", "UBI"));
-            places.add(new Place("UBI - Philosophers Tour", "ubi_philosophers_tour", "", "UBI"));
-            places.add(new Place("UBI - Faculty of Health Sciences", "ubi_faculty_health_sciences", "", "UBI"));
-            places.add(new Place("UBI - Faculty of Engineering", "ubi_engineering_faculty", "", "UBI"));
-            places.add(new Place("Covilhã -  Hospital", "covilha_hospital", "", "UBI"));
-            places.add(new Place("Covilhã - Serra Shopping", "covilha_serra_shopping", "", "UBI"));
-            places.add(new Place("Covilhã - Torre", "covilha_torre", "", "UBI"));
-            places.add(new Place("Covilhã - Wool museum", "covilha_wool_museum", "", "UBI"));
+            places = readPlaces("places.txt" , "UBI");
         }
         else{
-            places.add(new Place("Air Plane", "air_plane", "", "OTHER"));
-            places.add(new Place("Beach","beach", "", "OTHER"));
-            places.add(new Place("Supermarket", "supermarket", "", "OTHER"));
-            places.add(new Place("Restaurant", "restaurant", "", "OTHER"));
-            places.add(new Place("Hospital", "hospital", "", "OTHER"));
-            places.add(new Place("School", "school", "", "OTHER"));
-            places.add(new Place("Zoo", "zoo", "", "OTHER"));
-            places.add(new Place("Bank", "bank", "", "OTHER"));
-            places.add(new Place("Night Club", "night_club", "", "OTHER"));
-            places.add(new Place("Space Station", "space_station", "", "OTHER"));
+            places = readPlaces("places.txt" , "OTHER");
         }
 
         return places;
@@ -219,7 +239,7 @@ public class LobbyActivity extends AppCompatActivity {
         return gamePlaces.get(getRandomNumber(0, gamePlaces.size()));
     }
 
-    public void StartGame (View v){
+    public void StartGame (View v) throws IOException {
         if (arrList_players.size() < 4) {
             new AlertDialog.Builder(LobbyActivity.this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
