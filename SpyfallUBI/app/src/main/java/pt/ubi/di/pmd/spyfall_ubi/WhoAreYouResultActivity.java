@@ -121,7 +121,6 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
             goToReadyIntent.putExtra("PLAYERS", players);
             goToReadyIntent.putExtra("PLACE", place);
             startActivity(goToReadyIntent);
-            System.out.println("aqui");
         }
     }
 

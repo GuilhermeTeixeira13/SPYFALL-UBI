@@ -43,6 +43,10 @@
             android:name=".ReadyActivity"
             android:label="@string/Ready">
         </activity>
+        <activity
+            android:name=".GameONActivity"
+            android:label="@string/GameON">
+        </activity>
     </application>
 
 </manifest>

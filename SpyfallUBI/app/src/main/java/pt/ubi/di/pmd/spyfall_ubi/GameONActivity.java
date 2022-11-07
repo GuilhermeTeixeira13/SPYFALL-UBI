@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,34 +16,51 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
-public class ReadyActivity extends AppCompatActivity {
+public class GameONActivity extends AppCompatActivity {
     ArrayList<Player> players;
     Place place;
     int playerStarting;
+    int playerPlaying;
+    TextView txtViewPlayer;
+
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ready);
+        setContentView(R.layout.activity_gameon);
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 
-        if(checkFlag.equals("FROM_WHOAREYOURESULT")){
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        TextView txtViewTimer = (TextView) findViewById(R.id.textViewTimer);
+        txtViewPlayer = (TextView) findViewById(R.id.textViewWhosPlaying);
+        setSupportActionBar(toolbar);
+
+        if(checkFlag.equals("FROM_READY")){
             players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
             place = (Place) getIntent().getSerializableExtra("PLACE");
+            playerStarting = (int) getIntent().getSerializableExtra("PLAYER_STARTING");
+            playerPlaying = playerStarting;
+            txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
         }
 
-        TextView txtViewPlayerName = (TextView) findViewById(R.id.textViewPlayerName);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        new CountDownTimer(480000, 1000) {
+            String min, sec;
+            public void onTick(long millisUntilFinished) {
+                min = String.valueOf(millisUntilFinished / (60 * 1000) % 60);
+                sec = String.valueOf(millisUntilFinished / 1000 % 60);
 
-        playerStarting = getRandomNumber(0, players.size());
-        txtViewPlayerName.setText(players.get(playerStarting).getName());
+                if (Long.parseLong(sec) < 10)
+                    sec = "0"+String.valueOf(millisUntilFinished / 1000 % 60);
 
-        setSupportActionBar(toolbar);
-    }
+                txtViewTimer.setText(min+":"+sec);
+            }
 
-    public int getRandomNumber(int min, int max) {
-        return (int) ((Math.random() * (max - min)) + min);
+            public void onFinish() {
+                txtViewTimer.setText("done!");
+            }
+
+        }.start();
     }
 
     @Override
@@ -66,7 +84,7 @@ public class ReadyActivity extends AppCompatActivity {
             case R.id.homeButton:
                 // Ask if we want to the lobby and lose all the current page settings
 
-                new AlertDialog.Builder(ReadyActivity.this)
+                new AlertDialog.Builder(GameONActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Are you going to the main page?")
                         .setMessage("Do you want to lose the current game state and go back to the main page?")
@@ -88,14 +106,29 @@ public class ReadyActivity extends AppCompatActivity {
         startActivity(goToMainActivityIntent);
     }
 
-    public void startGame (View v) {
-        // Go to Game ON activity
+    public void revealSpy(View v){
 
-        Intent goToGameONIntent = new Intent(this, GameONActivity.class);
-        goToGameONIntent.putExtra("flag","FROM_READY");
-        goToGameONIntent.putExtra("PLAYERS", players);
-        goToGameONIntent.putExtra("PLACE", place);
-        goToGameONIntent.putExtra("PLAYER_STARTING", playerStarting);
-        startActivity(goToGameONIntent);
+    }
+
+    public void revealLocation(View v){
+
+    }
+
+    public void playerBack(View v){
+        playerPlaying -= 1;
+
+        if(playerPlaying < 0)
+            playerPlaying = players.size() - 1;
+
+        txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
+    }
+
+    public void playerNext(View v){
+        playerPlaying += 1;
+
+        if(playerPlaying >= players.size())
+            playerPlaying = 0;
+
+        txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
     }
 }

@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".WhoAreYouActivity">
+
+    <include
+        android:id="@+id/include_toolbar"
+        layout="@layout/tool_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/rounded_corners_graybackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewforcedVoting" />
+
+    <TextView
+        android:id="@+id/textViewforcedVoting"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="90dp"
+        android:fontFamily="@font/roboto_black"
+        android:text="Forced voting will begin in:"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/include_toolbar" />
+
+    <TextView
+        android:id="@+id/textViewTimer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="52dp"
+        android:fontFamily="@font/roboto_black"
+        android:text="00:00:00"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textViewforcedVoting" />
+
+    <View
+        android:id="@+id/horizontal_line1"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="50dp"
+        android:background="@android:color/darker_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTimer" />
+
+    <TextView
+        android:id="@+id/textViewPlayerAsking"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="The player that is asking the question should have the phone on his hand!"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/horizontal_line1" />
+
+    <TextView
+        android:id="@+id/textViewIfCivilian"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:fontFamily="@font/roboto_black"
+        android:text="If you are a civilian:"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPlayerAsking" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BtnRevealSpy"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_corners_buttons"
+        android:onClick="revealSpy"
+        android:text="REVEAL SPY"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIfCivilian" />
+
+
+    <TextView
+        android:id="@+id/textViewIfSPY"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
+        android:fontFamily="@font/roboto_black"
+        android:text="If you are a SPY:"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnRevealSpy" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/BtnRevealCivilan"
+        android:layout_width="190dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rounded_corners_buttons"
+        android:onClick="revealLocation"
+        android:text="REVEAL LOCATION"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewIfSPY" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="100dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/rounded_corners_graybackground"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BtnRevealCivilan" />
+
+    <TextView
+        android:id="@+id/textViewWhosPlaying"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_black"
+        android:text="Player Name"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view2" />
+
+
+    <ImageView
+        android:id="@+id/BtnPlayerBack"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="120dp"
+        android:background="@drawable/rounded_corners_buttons"
+        android:text="BACK"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:onClick="playerBack"
+        app:srcCompat="@drawable/navigate_before_icon"
+        app:layout_constraintTop_toBottomOf="@id/textViewWhosPlaying"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageView
+        android:id="@+id/BtnPlayerNext"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:text="Next"
+        android:background="@drawable/rounded_corners_buttons"
+        android:textColor="@color/white"
+        android:textSize="17dp"
+        android:onClick="playerNext"
+        app:srcCompat="@drawable/navigate_next_icon"
+        app:layout_constraintTop_toBottomOf="@id/textViewWhosPlaying"
+        app:layout_constraintStart_toEndOf="@id/BtnPlayerBack"
+        app:layout_constraintHorizontal_bias="0.5"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
