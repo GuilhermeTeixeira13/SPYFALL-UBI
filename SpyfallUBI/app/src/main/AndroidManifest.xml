@@ -47,6 +47,10 @@
             android:name=".GameONActivity"
             android:label="@string/GameON">
         </activity>
+        <activity
+            android:name=".RevealSpyActivity"
+            android:label="@string/RevealSPY">
+        </activity>
     </application>
 
 </manifest>

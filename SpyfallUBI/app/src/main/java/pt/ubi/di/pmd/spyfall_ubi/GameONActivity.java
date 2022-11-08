@@ -42,6 +42,7 @@ public class GameONActivity extends AppCompatActivity {
             playerStarting = (int) getIntent().getSerializableExtra("PLAYER_STARTING");
             playerPlaying = playerStarting;
             txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
+            System.out.println("aqui");
         }
 
         new CountDownTimer(480000, 1000) {
@@ -57,7 +58,7 @@ public class GameONActivity extends AppCompatActivity {
             }
 
             public void onFinish() {
-                txtViewTimer.setText("done!");
+                revealSpy(getWindow().getDecorView());
             }
 
         }.start();
@@ -107,7 +108,12 @@ public class GameONActivity extends AppCompatActivity {
     }
 
     public void revealSpy(View v){
-
+        Intent goToReavealSpyIntent = new Intent(this, RevealSpyActivity.class);
+        goToReavealSpyIntent.putExtra("flag","FROM_GAMEON");
+        goToReavealSpyIntent.putExtra("PLAYERS", players);
+        goToReavealSpyIntent.putExtra("PLACE", place);
+        goToReavealSpyIntent.putExtra("PLAYER_VOTING", playerPlaying);
+        startActivity(goToReavealSpyIntent);
     }
 
     public void revealLocation(View v){
