@@ -19,10 +19,10 @@ import java.util.ArrayList;
 public class GameONActivity extends AppCompatActivity {
     ArrayList<Player> players;
     Place place;
-    int playerStarting;
     int playerPlaying;
     TextView txtViewPlayer;
-
+    TextView txtViewTimer;
+    long timeUntilFinishTimer = -1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,32 +32,40 @@ public class GameONActivity extends AppCompatActivity {
         String checkFlag= intent.getStringExtra("flag");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        TextView txtViewTimer = (TextView) findViewById(R.id.textViewTimer);
+        txtViewTimer = (TextView) findViewById(R.id.textViewTimer);
         txtViewPlayer = (TextView) findViewById(R.id.textViewWhosPlaying);
         setSupportActionBar(toolbar);
 
         if(checkFlag.equals("FROM_READY")){
             players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
             place = (Place) getIntent().getSerializableExtra("PLACE");
-            playerStarting = (int) getIntent().getSerializableExtra("PLAYER_STARTING");
-            playerPlaying = playerStarting;
+            playerPlaying = (int) getIntent().getSerializableExtra("PLAYER_STARTING");
             txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
-            System.out.println("aqui");
+        }
+        if(checkFlag.equals("FROM_REVEALSPY")){
+            players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
+            place = (Place) getIntent().getSerializableExtra("PLACE");
+            playerPlaying = (int) getIntent().getSerializableExtra("PLAYER_PLAYING");
+            timeUntilFinishTimer = (long) getIntent().getSerializableExtra("TIMER");
+            txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
         }
 
-        new CountDownTimer(480000, 1000) {
+        new CountDownTimer((timeUntilFinishTimer != -1) ? timeUntilFinishTimer : 480000, 1000) {
             String min, sec;
             public void onTick(long millisUntilFinished) {
+                timeUntilFinishTimer = millisUntilFinished;
+
                 min = String.valueOf(millisUntilFinished / (60 * 1000) % 60);
                 sec = String.valueOf(millisUntilFinished / 1000 % 60);
 
                 if (Long.parseLong(sec) < 10)
-                    sec = "0"+String.valueOf(millisUntilFinished / 1000 % 60);
+                    sec = "0"+ millisUntilFinished / 1000 % 60;
 
                 txtViewTimer.setText(min+":"+sec);
             }
 
             public void onFinish() {
+                txtViewTimer.setText("finish");
                 revealSpy(getWindow().getDecorView());
             }
 
@@ -113,6 +121,8 @@ public class GameONActivity extends AppCompatActivity {
         goToReavealSpyIntent.putExtra("PLAYERS", players);
         goToReavealSpyIntent.putExtra("PLACE", place);
         goToReavealSpyIntent.putExtra("PLAYER_VOTING", playerPlaying);
+        goToReavealSpyIntent.putExtra("TIMER_LONG", timeUntilFinishTimer);
+        goToReavealSpyIntent.putExtra("TIMER_STRING", txtViewTimer.getText().toString());
         startActivity(goToReavealSpyIntent);
     }
 
