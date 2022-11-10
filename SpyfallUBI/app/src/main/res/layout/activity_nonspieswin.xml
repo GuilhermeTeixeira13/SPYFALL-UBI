@@ -18,8 +18,8 @@
 
     <View
         android:id="@+id/view1"
-        android:layout_width="300dp"
-        android:layout_height="200dp"
+        android:layout_width="270dp"
+        android:layout_height="210dp"
         android:background="@drawable/rounded_corners_graybackground"
         android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,107 +28,72 @@
         app:layout_constraintTop_toBottomOf="@+id/include_toolbar"/>
 
     <TextView
-        android:id="@+id/textViewHideThePhone"
+        android:id="@+id/textNonSpiesWin"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
         android:fontFamily="@font/roboto_black"
-        android:text="Click the button and pass the phone to the next player."
+        android:text="NON-SPIES WIN!"
         android:textAlignment="center"
         android:textColor="@color/gray_edText"
-        android:textSize="15dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/include_toolbar" />
 
-    <TextView
-        android:id="@+id/textViewPlayerName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
-        android:fontFamily="@font/roboto_black"
-        android:text="Player 1"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="30dp"
+    <ImageView
+        android:id="@+id/spyImage"
+        android:layout_width="250dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewHideThePhone" />
+        app:layout_constraintTop_toTopOf="@+id/textNonSpiesWin"
+        android:src="@drawable/happy_people"/>
 
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/BtnGotIt"
-        android:layout_width="181dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="210dp"
-        android:background="@drawable/rounded_corners_buttons"
-        android:text="Got it!"
-        android:textAllCaps="false"
-        android:textColor="@color/white"
-        android:textSize="17dp"
-        android:onClick="whoAreYou"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include_toolbar" />
 
     <View
         android:id="@+id/horizontal_line1"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:background="@android:color/darker_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/BtnGotIt" />
-
-    <TextView
-        android:id="@+id/textViewLocationSpyCard"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/roboto_black"
-        android:text="Location/Spy Card:"
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/horizontal_line1" />
+        app:layout_constraintTop_toBottomOf="@id/view1" />
 
     <View
         android:id="@+id/view2"
-        android:layout_width="240dp"
-        android:layout_height="280dp"
+        android:layout_width="250dp"
+        android:layout_height="270dp"
         android:background="@drawable/rounded_corners_graybackground"
         android:layout_marginTop="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLocationSpyCard"/>
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_line1"/>
 
     <ImageView
         android:id="@+id/imageViewLocation"
         android:layout_width="190dp"
-        android:layout_height="170dp"
+        android:layout_height="150dp"
         android:layout_marginTop="35dp"
         android:scaleType="fitXY"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewLocationSpyCard"/>
+        app:layout_constraintTop_toBottomOf="@+id/horizontal_line1"/>
 
     <TextView
         android:id="@+id/locationName"
-        android:layout_width="240dp"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="Location/Spy"
+        android:text="Location"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="20dp"
@@ -156,18 +121,56 @@
         app:layout_constraintTop_toBottomOf="@+id/locationName" />
 
     <TextView
-        android:id="@+id/help"
+        android:id="@+id/spies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:fontFamily="@font/roboto_regular"
-        android:text="Civilian help / Spy help"
+        android:text="Spy/Spies:"
         android:textAlignment="center"
         android:textColor="@color/black"
-        android:textSize="15dp"
+        android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/view2" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spies">
+
+        <Button
+            android:id="@+id/btnExit"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:text="LOBBY"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            android:onClick="exitNotSave"
+            android:layout_marginStart="40dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="40dp"
+            android:text="PLAY AGAIN"
+            android:onClick="sendSave"
+            android:textAlignment="center"
+            android:textSize="15dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btnExit" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

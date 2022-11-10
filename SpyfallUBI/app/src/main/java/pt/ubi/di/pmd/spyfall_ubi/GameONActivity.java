@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 public class GameONActivity extends AppCompatActivity {
     ArrayList<Player> players;
+    ArrayList<Player> players_completed;
     Place place;
     int playerPlaying;
     TextView txtViewPlayer;
@@ -38,16 +39,20 @@ public class GameONActivity extends AppCompatActivity {
 
         if(checkFlag.equals("FROM_READY")){
             players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
+            players_completed = players;
+            System.out.println("veio do READY e players completed="+players_completed.toString());
             place = (Place) getIntent().getSerializableExtra("PLACE");
             playerPlaying = (int) getIntent().getSerializableExtra("PLAYER_STARTING");
             txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
         }
-        if(checkFlag.equals("FROM_REVEALSPY")){
+        if(checkFlag.equals("FROM_REVEALSPY") || checkFlag.equals("FROM_SPYELIMINATED")){
             players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
             place = (Place) getIntent().getSerializableExtra("PLACE");
             playerPlaying = (int) getIntent().getSerializableExtra("PLAYER_PLAYING");
             timeUntilFinishTimer = (long) getIntent().getSerializableExtra("TIMER");
             txtViewPlayer.setText("Playing: "+ players.get(playerPlaying).getName());
+            players_completed = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
+            System.out.println("veio do REVEALSPY e players completed="+players_completed.toString());
         }
 
         new CountDownTimer((timeUntilFinishTimer != -1) ? timeUntilFinishTimer : 480000, 1000) {
@@ -123,6 +128,8 @@ public class GameONActivity extends AppCompatActivity {
         goToReavealSpyIntent.putExtra("PLAYER_VOTING", playerPlaying);
         goToReavealSpyIntent.putExtra("TIMER_LONG", timeUntilFinishTimer);
         goToReavealSpyIntent.putExtra("TIMER_STRING", txtViewTimer.getText().toString());
+        System.out.println("vai para o REVEALSPLY com players completed="+players_completed.toString());
+        goToReavealSpyIntent.putExtra("PLAYERS_COMPLETED", players_completed);
         startActivity(goToReavealSpyIntent);
     }
 

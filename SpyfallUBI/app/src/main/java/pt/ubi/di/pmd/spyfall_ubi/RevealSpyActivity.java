@@ -29,6 +29,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class RevealSpyActivity extends AppCompatActivity {
     ArrayList<Player> players;
+    ArrayList<Player> players_completed;
     Place place;
     int player_voting;
     int player_starting;
@@ -53,6 +54,7 @@ public class RevealSpyActivity extends AppCompatActivity {
             player_starting = player_voting;
             timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
             timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
+            players_completed = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
         }
 
         txtViewPlayerVoting = (TextView ) findViewById(R.id.player_name);
@@ -131,9 +133,13 @@ public class RevealSpyActivity extends AppCompatActivity {
                             // Else Keep playing
 
                             if(timerStr.equals("finish")) {
+                                Toast.makeText(RevealSpyActivity.this, "Draw on the votes! Vote again!",
+                                        Toast.LENGTH_LONG).show();
                                 finish();
                                 startActivity(getIntent());
                             } else {
+                                Toast.makeText(RevealSpyActivity.this, "Draw on the votes! Keep playing!",
+                                        Toast.LENGTH_LONG).show();
                                 goToGame(getWindow().getDecorView());
                             }
                         } else {
@@ -151,13 +157,15 @@ public class RevealSpyActivity extends AppCompatActivity {
                                 if (numSpies > 1) {
                                     // A spy got kicked and the game proceeds
                                     players.remove(playerMaisVotado);
-                                    goToGame(getWindow().getDecorView());
+                                    goToSpyEliminated(getWindow().getDecorView(), playerMaisVotado);
                                 } else {
                                     // Non spies win
-                                    System.out.println("Non spies win");
+                                    goToNonSpiesWin(getWindow().getDecorView());
                                 }
                             }else {
                                 // Spies wins
+
+                                // --> Go to Spies win page
                                 System.out.println("Spies wins");
                             }
                         }
@@ -189,13 +197,37 @@ public class RevealSpyActivity extends AppCompatActivity {
     }
 
     public void goToGame(View v){
-        Intent goToGameONyIntent = new Intent(this, GameONActivity.class);
-        goToGameONyIntent.putExtra("flag","FROM_REVEALSPY");
-        goToGameONyIntent.putExtra("PLAYERS", players);
-        goToGameONyIntent.putExtra("PLACE", place);
-        goToGameONyIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, players.size()));
-        goToGameONyIntent.putExtra("TIMER", timer);
-        startActivity(goToGameONyIntent);
+        Intent goToGameONIntent = new Intent(this, GameONActivity.class);
+        goToGameONIntent.putExtra("flag","FROM_REVEALSPY");
+        goToGameONIntent.putExtra("PLAYERS", players);
+        goToGameONIntent.putExtra("PLACE", place);
+        goToGameONIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, players.size()));
+        goToGameONIntent.putExtra("TIMER", timer);
+        System.out.println("vai para o GAMEON com players completed="+players_completed.toString());
+        goToGameONIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        startActivity(goToGameONIntent);
+    }
+
+    public void goToSpyEliminated(View v, Player playerElimiando){
+        Intent goToSpyEliminatedIntent = new Intent(this, SpyEliminatedActivity.class);
+        goToSpyEliminatedIntent.putExtra("flag","FROM_REVEALSPY");
+        goToSpyEliminatedIntent.putExtra("PLAYERS", players);
+        goToSpyEliminatedIntent.putExtra("PLACE", place);
+        goToSpyEliminatedIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, players.size()));
+        goToSpyEliminatedIntent.putExtra("TIMER", timer);
+        goToSpyEliminatedIntent.putExtra("PLAYER_ELIMINATED", playerElimiando);
+        System.out.println("vai para o SpyEliminated com players completed="+players_completed.toString());
+        goToSpyEliminatedIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        startActivity(goToSpyEliminatedIntent);
+    }
+
+    public void goToNonSpiesWin(View v){
+        Intent goToSpyEliminatedIntent = new Intent(this, NonSpiesWinActivity.class);
+        goToSpyEliminatedIntent.putExtra("flag","FROM_REVEALSPY");
+        System.out.println("vai para o NONSPIESWIN com players completed="+players_completed.toString());
+        goToSpyEliminatedIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        goToSpyEliminatedIntent.putExtra("PLACE", place);
+        startActivity(goToSpyEliminatedIntent);
     }
 
     public int getRandomNumber(int min, int max) {

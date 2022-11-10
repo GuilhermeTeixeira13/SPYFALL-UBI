@@ -51,6 +51,14 @@
             android:name=".RevealSpyActivity"
             android:label="@string/RevealSPY">
         </activity>
+        <activity
+            android:name=".SpyEliminatedActivity"
+            android:label="@string/SPYEliminated">
+        </activity>
+        <activity
+            android:name=".NonSpiesWinActivity"
+            android:label="@string/NONSPIESWin">
+        </activity>
     </application>
 
 </manifest>
