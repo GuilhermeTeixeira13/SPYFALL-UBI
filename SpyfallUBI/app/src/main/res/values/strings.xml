@@ -5,8 +5,10 @@
     <string name="Ready">Spyfall @ UBI: Ready?</string>
     <string name="GameON">Spyfall @ UBI: Game ON!</string>
     <string name="RevealSPY">Spyfall @ UBI: Reveal SPY!</string>
+    <string name="RevealLocation">Spyfall @ UBI: Reveal Location!</string>
     <string name="SPYEliminated">Spyfall @ UBI: Elimination!</string>
     <string name="NONSPIESWin">Spyfall @ UBI: Non-spies win!</string>
+    <string name="SPIESWin">Spyfall @ UBI: Spies win!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

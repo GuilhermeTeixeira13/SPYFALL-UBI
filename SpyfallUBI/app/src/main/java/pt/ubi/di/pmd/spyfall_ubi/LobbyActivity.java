@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
@@ -34,11 +35,11 @@ public class LobbyActivity extends AppCompatActivity {
     EditText EdText_player_name;
     CheckBox checkbox_ubi;
     ImageButton Btn_add_player;
-    ArrayList<String> arrList_players;
-    ArrayAdapter<String> adapter;
     Boolean checkbox_result;
     Integer numberOfSpies;
     TextView textNumberSpies;
+    ArrayList<Player> players;
+    ArrayAdapter adapter;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +53,21 @@ public class LobbyActivity extends AppCompatActivity {
         EdText_player_name = findViewById(R.id.add_player_name);
         checkbox_ubi = findViewById(R.id.checkBoxUBI);
         textNumberSpies = findViewById(R.id.number_of_spies);
+        players = new ArrayList<Player>();
 
-        arrList_players = new ArrayList<>();
-        adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_list_item_1, arrList_players);
+        adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, players) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View view = super.getView(position, convertView, parent);
+                TextView text1 = (TextView) view.findViewById(android.R.id.text1);
+                TextView text2 = (TextView) view.findViewById(android.R.id.text2);
+
+                text1.setText(players.get(position).getName());
+                text2.setText("pontos");
+                return view;
+            }
+        };
+
         playersList.setAdapter(adapter);
 
         checkbox_result = true;
@@ -72,7 +85,7 @@ public class LobbyActivity extends AppCompatActivity {
                         .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                arrList_players.remove(itemToDelete);
+                                players.remove(itemToDelete);
                                 adapter.notifyDataSetChanged();
                                 updateNumberOfSpies();
                             }
@@ -121,10 +134,10 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void updateNumberOfSpies(){
-        if (arrList_players.isEmpty()) {
+        if (players.isEmpty()) {
             numberOfSpies = 0;
         }
-        else if (arrList_players.size() < 6) {
+        else if (players.size() < 6) {
             numberOfSpies = 1;
         }
         else {
@@ -134,7 +147,7 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void addToList (View v){
-        arrList_players.add(EdText_player_name.getText().toString());
+        players.add(new Player(EdText_player_name.getText().toString(), 0));
         adapter.notifyDataSetChanged();
         updateNumberOfSpies();
     }
@@ -153,42 +166,39 @@ public class LobbyActivity extends AppCompatActivity {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    public ArrayList<Player> setPlayersRoles(ArrayList<String> playersList){
+    public void setPlayersRoles(ArrayList<Player> players){
         int i = 0;
         int posFirstSpy  = 0;
         int posSecondSpy = 0;
-        ArrayList<Player> players = new ArrayList<Player>();
 
-        posFirstSpy = getRandomNumber(0, playersList.size());
+        posFirstSpy = getRandomNumber(0, players.size());
         if (numberOfSpies > 1) {
             do{
-                posSecondSpy = getRandomNumber(0, playersList.size());
+                posSecondSpy = getRandomNumber(0, players.size());
             }while(posSecondSpy == posFirstSpy );
 
-            for (i=0; i<playersList.size(); i++){
+            for (i=0; i<players.size(); i++){
                 if (i == posFirstSpy ) {
-                    players.add(new Player(playersList.get(i), 1));
+                    players.get(i).setRole(1);
                 }
                 else if (i == posSecondSpy) {
-                    players.add(new Player(playersList.get(i), 1));
+                    players.get(i).setRole(1);
                 }
                 else{
-                    players.add(new Player(playersList.get(i), 0));
+                    players.get(i).setRole(0);
                 }
             }
         }
         else {
-            for (i=0; i<playersList.size(); i++){
+            for (i=0; i<players.size(); i++){
                 if (i == posFirstSpy ) {
-                    players.add(new Player(playersList.get(i), 1));
+                    players.get(i).setRole(1);
                 }
                 else{
-                    players.add(new Player(playersList.get(i), 0));
+                    players.get(i).setRole(0);
                 }
             }
         }
-
-        return players;
     }
 
     public ArrayList<Place> readPlaces(String filepath, String category) throws IOException {
@@ -240,7 +250,7 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void StartGame (View v) throws IOException {
-        if (arrList_players.size() < 4) {
+        if (players.size() < 4) {
             new AlertDialog.Builder(LobbyActivity.this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setTitle("Can't proceed!")
@@ -248,7 +258,7 @@ public class LobbyActivity extends AppCompatActivity {
                     .setNeutralButton("Got it!", null)
                     .show();
         }else {
-            ArrayList<Player> players = setPlayersRoles(arrList_players);
+            setPlayersRoles(players);
             Place place = choosePlace(getPlaces(checkbox_result));
 
             Intent goToWhoAreYouIntent = new Intent(this, WhoAreYouActivity.class);

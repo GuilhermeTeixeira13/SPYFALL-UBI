@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,16 +17,17 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.util.ArrayList;
 
-public class NonSpiesWinActivity extends AppCompatActivity {
+public class SpiesWinActivity extends AppCompatActivity {
     ArrayList<Player> players;
     Place place;
     TextView TxtViewLocationName;
+    TextView TxtViewSpyWin;
     TextView TxtViewSpies;
     ImageView ImgLocation;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_nonspieswin);
+        setContentView(R.layout.activity_spieswin);
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
@@ -40,12 +40,17 @@ public class NonSpiesWinActivity extends AppCompatActivity {
         TxtViewLocationName = (TextView) findViewById(R.id.locationName);
         TxtViewLocationName.setText(place.getName());
 
+        TxtViewSpyWin = (TextView) findViewById(R.id.textSpiesWin);
         TxtViewSpies= (TextView) findViewById(R.id.spies);
         String spies = getSpies(players);
-        if(spies.contains("/"))
+        if(spies.contains("/")){
             TxtViewSpies.setText("Spies: "+spies);
-        else
+            TxtViewSpyWin.setText("SPIES WIN!");
+        }
+        else {
             TxtViewSpies.setText("Spy: "+spies);
+            TxtViewSpyWin.setText("SPY WIN!");
+        }
 
         ImgLocation = (ImageView) findViewById(R.id.imageViewLocation);
         Uri path = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID +  "/drawable/"+place.getImagePath());
@@ -87,7 +92,7 @@ public class NonSpiesWinActivity extends AppCompatActivity {
             case R.id.homeButton:
                 // Ask if we want to the lobby and lose all the current page settings
 
-                new AlertDialog.Builder(NonSpiesWinActivity.this)
+                new AlertDialog.Builder(SpiesWinActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Are you going to the main page?")
                         .setMessage("Do you want to lose the current game state and go back to the main page?")
@@ -110,7 +115,7 @@ public class NonSpiesWinActivity extends AppCompatActivity {
     }
 
     public void showLocationInfo (View v) {
-        new AlertDialog.Builder(NonSpiesWinActivity.this)
+        new AlertDialog.Builder(SpiesWinActivity.this)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setTitle(place.getName())
                 .setMessage(place.getInfo())

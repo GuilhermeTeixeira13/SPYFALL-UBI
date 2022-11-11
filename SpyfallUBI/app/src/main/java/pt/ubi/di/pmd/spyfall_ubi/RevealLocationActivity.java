@@ -5,40 +5,39 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 
-public class RevealSpyActivity extends AppCompatActivity {
+
+public class RevealLocationActivity extends AppCompatActivity {
     ArrayList<Player> players;
     ArrayList<Player> players_completed;
     Place place;
+    ArrayList<Place> allPlaces;
     int player_voting;
-    int player_starting;
-    TextView txtViewPlayerVoting;
-    int numVoto = 0;
-    ArrayList<Integer> votos;
     long timer;
     String timerStr;
 
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_revealspy);
+        setContentView(R.layout.activity_reveallocation);
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
@@ -47,37 +46,30 @@ public class RevealSpyActivity extends AppCompatActivity {
             players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
             place = (Place) getIntent().getSerializableExtra("PLACE");
             player_voting = (int) getIntent().getSerializableExtra("PLAYER_VOTING");
-            player_starting = player_voting;
             timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
             timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
             players_completed = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
         }
 
-        txtViewPlayerVoting = (TextView ) findViewById(R.id.player_name);
-        txtViewPlayerVoting.setText(players.get(player_voting).getName());
-
-        votos = inicializeVotos(0, players.size());
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ListView lv = (ListView) findViewById(R.id.listview);
-        lv.setAdapter(new MyListAdaper(this, R.layout.list_players, players));
-    }
-
-    public ArrayList<Integer> inicializeVotos(int num, int size){
-        ArrayList<Integer> votos = new ArrayList<>();
-
-        for(int i=0; i<size; i++){
-            votos.add(i, num);
+        try {
+            allPlaces = getPlaces(place.getCategory().equals("UBI") ? true : false);
+            System.out.println(allPlaces);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return votos;
+
+        ListView lv = (ListView) findViewById(R.id.listviewlocations);
+        lv.setAdapter(new MyListAdaper(this, R.layout.list_locations, allPlaces));
     }
 
-    private class MyListAdaper extends ArrayAdapter<Player> {
+
+    private class MyListAdaper extends ArrayAdapter<Place> {
         private int layout;
-        private ArrayList<Player> mObjects;
-        private MyListAdaper(Context context, int resource, ArrayList<Player> objects) {
+        private ArrayList<Place> mObjects;
+        private MyListAdaper(Context context, int resource, ArrayList<Place> objects) {
             super(context, resource, objects);
             mObjects = objects;
             layout = resource;
@@ -90,8 +82,7 @@ public class RevealSpyActivity extends AppCompatActivity {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
                 convertView = inflater.inflate(layout, parent, false);
                 ViewHolder viewHolder = new ViewHolder();
-                viewHolder.nVotes = (TextView) convertView.findViewById(R.id.list_number_votes);
-                viewHolder.playerName = (TextView) convertView.findViewById(R.id.list_player_name);
+                viewHolder.location = (TextView) convertView.findViewById(R.id.list_location);
                 viewHolder.btnVote = (Button) convertView.findViewById(R.id.list_btn_vote);
                 convertView.setTag(viewHolder);
             }
@@ -100,72 +91,45 @@ public class RevealSpyActivity extends AppCompatActivity {
             mainViewholder.btnVote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    votos.set(position, votos.get(position) + 1);
-
-                    player_voting += 1;
-                    if(player_voting >= players.size())
-                        player_voting = 0;
-
-                    numVoto += 1;
-
-                    if (numVoto < players.size()){
-                        // Each player vote
-                        txtViewPlayerVoting.setText(players.get(player_voting).getName());
-                        finalMainViewholder.nVotes.setText("["+votos.get(position)+"]");
-                    } else {
-                        // Vote ended
-                        int maxVotos = Collections.max(votos);
-                        int maxVotosReps = Collections.frequency(votos, maxVotos);
-                        boolean draw = maxVotosReps > 1;
-
-                        if (draw) {
-                            // If we are in the case where the time ended then reset votes and vote again
-                            // Else Keep playing
-
-                            if(timerStr.equals("finish")) {
-                                Toast.makeText(RevealSpyActivity.this, "Draw on the votes! Vote again!",
-                                        Toast.LENGTH_LONG).show();
-                                finish();
-                                startActivity(getIntent());
-                            } else {
-                                Toast.makeText(RevealSpyActivity.this, "Draw on the votes! Keep playing!",
-                                        Toast.LENGTH_LONG).show();
-                                goToGame(getWindow().getDecorView());
-                            }
+                    if(players.get(player_voting).getRole() == 1){
+                        System.out.println("Clicado-> "+allPlaces.get(position));
+                        System.out.println("Place-> "+place);
+                        System.out.println("Equals -> "+ (allPlaces.get(position).equals(place)));
+                        if(allPlaces.get(position).equals(place)){
+                            // Spies win
+                            goToSpiesWin(getWindow().getDecorView());
                         } else {
-                            // Check what card corresponds to the player with more votes
+                            int numpSpies = getNumberOfSpies(players);
 
-                            // If it is a Spy Card
-                            //      If there is more then 1 spy, then that spy is eliminated and the game proceed
-                            //      Else Non spies win
-                            // Else the spies wins
-
-                            Player playerMaisVotado = players.get(votos.indexOf(maxVotos));
-
-                            if(playerMaisVotado.getRole() == 1){
-                                int numSpies = getNumberOfSpies(players);
-                                if (numSpies > 1) {
-                                    // A spy got kicked and the game proceeds
-                                    players.remove(playerMaisVotado);
-                                    goToSpyEliminated(getWindow().getDecorView(), playerMaisVotado);
-                                } else {
-                                    // Non spies win
-                                    goToNonSpiesWin(getWindow().getDecorView());
-                                }
-                            }else {
-                                // Spies wins
-                                goToSpiesWin(getWindow().getDecorView());
+                            if(numpSpies > 1) {
+                                // A spy got kicked and the game proceeds
+                                Player SpyToEliminate = players.get(player_voting);
+                                players.remove(SpyToEliminate);
+                                goToSpyEliminated(getWindow().getDecorView(), SpyToEliminate);
+                            } else {
+                                // Non-spies win
+                                goToNonSpiesWin(getWindow().getDecorView());
                             }
                         }
+                    } else {
+                        // Reset game because a non-spie tried to reveal the rounds location
+                        Toast.makeText(RevealLocationActivity.this, "A non-spie tried to reveal the rounds location! Game reset!",
+                                Toast.LENGTH_LONG).show();
+
+                        // Go to lobby with the list of players
                     }
                 }
             });
 
-            mainViewholder.nVotes.setText("[0]");
-            mainViewholder.playerName.setText(players.get(position).getName());
+            mainViewholder.location.setText(allPlaces.get(position).getName());
 
             return convertView;
         }
+    }
+
+    public class ViewHolder {
+        TextView location;
+        Button btnVote;
     }
 
     public int getNumberOfSpies(ArrayList<Player> players){
@@ -178,10 +142,48 @@ public class RevealSpyActivity extends AppCompatActivity {
         return spieCount;
     }
 
-    public class ViewHolder {
-        TextView nVotes;
-        TextView playerName;
-        Button btnVote;
+    public ArrayList<Place> readPlaces(String filepath, String category) throws IOException {
+        BufferedReader reader = null;
+        ArrayList<Place> places = new ArrayList<Place>();
+        String[] parts;
+
+        try {
+            reader = new BufferedReader(new InputStreamReader(getAssets().open(filepath)));
+            String line = reader.readLine();
+
+            while(line != null){
+                parts = line.split("/");
+
+                String name = parts[0];
+                String imagePath = parts[1];
+                String info = parts[2];
+                String cat = parts[3];
+
+                if (cat.equals(category)) {
+                    Place newPlace = new Place(name, imagePath, info, cat);
+                    places.add(newPlace);
+                }
+
+                line = reader.readLine();
+            }
+        } catch (IOException e) {
+            System.out.println("File not found.");
+        }
+
+        return places;
+    }
+
+    public ArrayList<Place> getPlaces(Boolean UBIPlaces) throws IOException {
+        ArrayList<Place> places;
+
+        if (UBIPlaces) {
+            places = readPlaces("places.txt" , "UBI");
+        }
+        else{
+            places = readPlaces("places.txt" , "OTHER");
+        }
+
+        return places;
     }
 
     public void goToGame(View v){
@@ -193,18 +195,6 @@ public class RevealSpyActivity extends AppCompatActivity {
         goToGameONIntent.putExtra("TIMER", timer);
         goToGameONIntent.putExtra("PLAYERS_COMPLETED", players_completed);
         startActivity(goToGameONIntent);
-    }
-
-    public void goToSpyEliminated(View v, Player playerElimiando){
-        Intent goToSpyEliminatedIntent = new Intent(this, SpyEliminatedActivity.class);
-        goToSpyEliminatedIntent.putExtra("flag","FROM_REVEALSPY");
-        goToSpyEliminatedIntent.putExtra("PLAYERS", players);
-        goToSpyEliminatedIntent.putExtra("PLACE", place);
-        goToSpyEliminatedIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, players.size()));
-        goToSpyEliminatedIntent.putExtra("TIMER", timer);
-        goToSpyEliminatedIntent.putExtra("PLAYER_ELIMINATED", playerElimiando);
-        goToSpyEliminatedIntent.putExtra("PLAYERS_COMPLETED", players_completed);
-        startActivity(goToSpyEliminatedIntent);
     }
 
     public void goToNonSpiesWin(View v){
@@ -221,6 +211,18 @@ public class RevealSpyActivity extends AppCompatActivity {
         goToSpiesWinIntent.putExtra("PLAYERS_COMPLETED", players_completed);
         goToSpiesWinIntent.putExtra("PLACE", place);
         startActivity(goToSpiesWinIntent);
+    }
+
+    public void goToSpyEliminated(View v, Player playerElimiando){
+        Intent goToSpyEliminatedIntent = new Intent(this, SpyEliminatedActivity.class);
+        goToSpyEliminatedIntent.putExtra("flag","FROM_REVEALSPY");
+        goToSpyEliminatedIntent.putExtra("PLAYERS", players);
+        goToSpyEliminatedIntent.putExtra("PLACE", place);
+        goToSpyEliminatedIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, players.size()));
+        goToSpyEliminatedIntent.putExtra("TIMER", timer);
+        goToSpyEliminatedIntent.putExtra("PLAYER_ELIMINATED", playerElimiando);
+        goToSpyEliminatedIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        startActivity(goToSpyEliminatedIntent);
     }
 
     public int getRandomNumber(int min, int max) {
@@ -248,7 +250,7 @@ public class RevealSpyActivity extends AppCompatActivity {
             case R.id.homeButton:
                 // Ask if we want to the lobby and lose all the current page settings
 
-                new AlertDialog.Builder(RevealSpyActivity.this)
+                new AlertDialog.Builder(RevealLocationActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .setTitle("Are you going to the main page?")
                         .setMessage("Do you want to lose the current game state and go back to the main page?")

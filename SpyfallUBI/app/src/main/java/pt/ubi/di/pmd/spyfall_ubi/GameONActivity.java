@@ -128,13 +128,20 @@ public class GameONActivity extends AppCompatActivity {
         goToReavealSpyIntent.putExtra("PLAYER_VOTING", playerPlaying);
         goToReavealSpyIntent.putExtra("TIMER_LONG", timeUntilFinishTimer);
         goToReavealSpyIntent.putExtra("TIMER_STRING", txtViewTimer.getText().toString());
-        System.out.println("vai para o REVEALSPLY com players completed="+players_completed.toString());
         goToReavealSpyIntent.putExtra("PLAYERS_COMPLETED", players_completed);
         startActivity(goToReavealSpyIntent);
     }
 
     public void revealLocation(View v){
-
+        Intent goToReavealSpyIntent = new Intent(this, RevealLocationActivity.class);
+        goToReavealSpyIntent.putExtra("flag","FROM_GAMEON");
+        goToReavealSpyIntent.putExtra("PLAYERS", players);
+        goToReavealSpyIntent.putExtra("PLACE", place);
+        goToReavealSpyIntent.putExtra("PLAYER_VOTING", playerPlaying);
+        goToReavealSpyIntent.putExtra("TIMER_LONG", timeUntilFinishTimer);
+        goToReavealSpyIntent.putExtra("TIMER_STRING", txtViewTimer.getText().toString());
+        goToReavealSpyIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        startActivity(goToReavealSpyIntent);
     }
 
     public void playerBack(View v){
