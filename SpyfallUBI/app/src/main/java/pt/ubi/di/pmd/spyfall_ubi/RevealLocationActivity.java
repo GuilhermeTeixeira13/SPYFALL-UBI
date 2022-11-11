@@ -24,16 +24,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collection;
 
 
 public class RevealLocationActivity extends AppCompatActivity {
     ArrayList<Player> players;
+    ArrayList<Player> players_kicked;
     ArrayList<Player> players_completed;
     Place place;
     ArrayList<Place> allPlaces;
     int player_voting;
     long timer;
     String timerStr;
+
 
     protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -49,6 +52,8 @@ public class RevealLocationActivity extends AppCompatActivity {
             timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
             timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
             players_completed = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
+            players_kicked = (ArrayList<Player>) players_completed.clone();
+            players_kicked.removeAll(players);
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -91,32 +96,24 @@ public class RevealLocationActivity extends AppCompatActivity {
             mainViewholder.btnVote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(players.get(player_voting).getRole() == 1){
-                        System.out.println("Clicado-> "+allPlaces.get(position));
-                        System.out.println("Place-> "+place);
-                        System.out.println("Equals -> "+ (allPlaces.get(position).equals(place)));
-                        if(allPlaces.get(position).equals(place)){
-                            // Spies win
-                            goToSpiesWin(getWindow().getDecorView());
-                        } else {
-                            int numpSpies = getNumberOfSpies(players);
+                    if(allPlaces.get(position).equals(place)){
+                        // Spies win
+                        players_completed.get(player_voting).setPoints(players_completed.get(player_voting).getPoints() + 4);
 
-                            if(numpSpies > 1) {
-                                // A spy got kicked and the game proceeds
-                                Player SpyToEliminate = players.get(player_voting);
-                                players.remove(SpyToEliminate);
-                                goToSpyEliminated(getWindow().getDecorView(), SpyToEliminate);
-                            } else {
-                                // Non-spies win
-                                goToNonSpiesWin(getWindow().getDecorView());
-                            }
-                        }
+                        goToSpiesWin(getWindow().getDecorView());
                     } else {
-                        // Reset game because a non-spie tried to reveal the rounds location
-                        Toast.makeText(RevealLocationActivity.this, "A non-spie tried to reveal the rounds location! Game reset!",
-                                Toast.LENGTH_LONG).show();
+                        int numpSpies = getNumberOfSpies(players);
 
-                        // Go to lobby with the list of players
+                        if(numpSpies > 1) {
+                            // A spy got kicked and the game proceeds
+                            Player SpyToEliminate = players.get(player_voting);
+                            players.remove(SpyToEliminate);
+                            goToSpyEliminated(getWindow().getDecorView(), SpyToEliminate);
+                        } else {
+                            // Non-spies win
+                            points(players_completed, players_kicked, 0, 1);
+                            goToNonSpiesWin(getWindow().getDecorView());
+                        }
                     }
                 }
             });
@@ -124,6 +121,14 @@ public class RevealLocationActivity extends AppCompatActivity {
             mainViewholder.location.setText(allPlaces.get(position).getName());
 
             return convertView;
+        }
+    }
+
+    public static void points(ArrayList<Player> players_completed, ArrayList<Player> players_kicked, Integer role, Integer points){
+        for(int i=0; i<players_completed.size(); i++) {
+            if (players_completed.get(i).getRole().equals(role) && !players_kicked.contains(players_completed.get(i))) {
+                players_completed.get(i).setPoints(players_completed.get(i).getPoints() + points);
+            }
         }
     }
 
@@ -208,6 +213,8 @@ public class RevealLocationActivity extends AppCompatActivity {
     public void goToSpiesWin(View v){
         Intent goToSpiesWinIntent = new Intent(this, SpiesWinActivity.class);
         goToSpiesWinIntent.putExtra("flag","FROM_REVEALSPY");
+        System.out.println(players_completed);
+        System.out.println(players_kicked);
         goToSpiesWinIntent.putExtra("PLAYERS_COMPLETED", players_completed);
         goToSpiesWinIntent.putExtra("PLACE", place);
         startActivity(goToSpiesWinIntent);
@@ -223,6 +230,13 @@ public class RevealLocationActivity extends AppCompatActivity {
         goToSpyEliminatedIntent.putExtra("PLAYER_ELIMINATED", playerElimiando);
         goToSpyEliminatedIntent.putExtra("PLAYERS_COMPLETED", players_completed);
         startActivity(goToSpyEliminatedIntent);
+    }
+
+    public void goToLobby (View v) {
+        Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
+        goToLobbyIntent.putExtra("flag","FROM_REVEALLOCATION");
+        goToLobbyIntent.putExtra("PLAYERS", players_completed);
+        startActivity(goToLobbyIntent);
     }
 
     public int getRandomNumber(int min, int max) {

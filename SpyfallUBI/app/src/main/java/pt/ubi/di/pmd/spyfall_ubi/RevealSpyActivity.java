@@ -1,5 +1,7 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
+import static pt.ubi.di.pmd.spyfall_ubi.RevealLocationActivity.points;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,6 +28,7 @@ import androidx.appcompat.widget.Toolbar;
 
 public class RevealSpyActivity extends AppCompatActivity {
     ArrayList<Player> players;
+    ArrayList<Player> players_kicked;
     ArrayList<Player> players_completed;
     Place place;
     int player_voting;
@@ -51,6 +54,8 @@ public class RevealSpyActivity extends AppCompatActivity {
             timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
             timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
             players_completed = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
+            players_kicked = (ArrayList<Player>) players_completed.clone();
+            players_kicked.removeAll(players);
         }
 
         txtViewPlayerVoting = (TextView ) findViewById(R.id.player_name);
@@ -147,13 +152,19 @@ public class RevealSpyActivity extends AppCompatActivity {
                                 if (numSpies > 1) {
                                     // A spy got kicked and the game proceeds
                                     players.remove(playerMaisVotado);
+                                    players_completed.get(player_starting).setPoints(players_completed.get(player_starting).getPoints() + 1);
+
                                     goToSpyEliminated(getWindow().getDecorView(), playerMaisVotado);
                                 } else {
                                     // Non spies win
+                                    players_completed.get(player_starting).setPoints(players_completed.get(player_starting).getPoints() + 1);
+                                    points(players_completed, players_kicked, 0, 1);
+
                                     goToNonSpiesWin(getWindow().getDecorView());
                                 }
                             }else {
                                 // Spies wins
+                                points(players_completed, players_kicked, 1, 4);
                                 goToSpiesWin(getWindow().getDecorView());
                             }
                         }

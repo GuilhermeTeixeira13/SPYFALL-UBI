@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class LobbyActivity extends AppCompatActivity {
@@ -48,12 +51,25 @@ public class LobbyActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        Intent intent = getIntent();
+        String checkFlag= intent.getStringExtra("flag");
+
+        if(checkFlag == null){
+            players = new ArrayList<Player>();
+            numberOfSpies = 0;
+        }
+        else if(checkFlag.equals("FROM_NONSPYWIN") || checkFlag.equals("FROM_SPYWIN") || checkFlag.equals("FROM_REVEALLOCATION") || checkFlag.equals("FROM_GAMEON")){
+            players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
+            numberOfSpies = 0;
+        }
+
         Btn_add_player = findViewById(R.id.btn_add_player);
         playersList = findViewById(R.id.players_list);
         EdText_player_name = findViewById(R.id.add_player_name);
         checkbox_ubi = findViewById(R.id.checkBoxUBI);
         textNumberSpies = findViewById(R.id.number_of_spies);
-        players = new ArrayList<Player>();
+
+        Collections.sort(players, (o1, o2) -> o2.getPoints() - o1.getPoints());
 
         adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, players) {
             @Override
@@ -63,7 +79,7 @@ public class LobbyActivity extends AppCompatActivity {
                 TextView text2 = (TextView) view.findViewById(android.R.id.text2);
 
                 text1.setText(players.get(position).getName());
-                text2.setText("pontos");
+                text2.setText(players.get(position).getPoints()+" points");
                 return view;
             }
         };
@@ -147,7 +163,7 @@ public class LobbyActivity extends AppCompatActivity {
     }
 
     public void addToList (View v){
-        players.add(new Player(EdText_player_name.getText().toString(), 0));
+        players.add(new Player(EdText_player_name.getText().toString(), 0, 0));
         adapter.notifyDataSetChanged();
         updateNumberOfSpies();
     }

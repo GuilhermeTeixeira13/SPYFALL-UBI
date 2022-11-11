@@ -9,6 +9,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -133,15 +134,30 @@ public class GameONActivity extends AppCompatActivity {
     }
 
     public void revealLocation(View v){
-        Intent goToReavealSpyIntent = new Intent(this, RevealLocationActivity.class);
-        goToReavealSpyIntent.putExtra("flag","FROM_GAMEON");
-        goToReavealSpyIntent.putExtra("PLAYERS", players);
-        goToReavealSpyIntent.putExtra("PLACE", place);
-        goToReavealSpyIntent.putExtra("PLAYER_VOTING", playerPlaying);
-        goToReavealSpyIntent.putExtra("TIMER_LONG", timeUntilFinishTimer);
-        goToReavealSpyIntent.putExtra("TIMER_STRING", txtViewTimer.getText().toString());
-        goToReavealSpyIntent.putExtra("PLAYERS_COMPLETED", players_completed);
-        startActivity(goToReavealSpyIntent);
+
+        if(players.get(playerPlaying).getRole() == 1){
+            Intent goToReavealSpyIntent = new Intent(this, RevealLocationActivity.class);
+            goToReavealSpyIntent.putExtra("flag","FROM_GAMEON");
+            goToReavealSpyIntent.putExtra("PLAYERS", players);
+            goToReavealSpyIntent.putExtra("PLACE", place);
+            goToReavealSpyIntent.putExtra("PLAYER_VOTING", playerPlaying);
+            goToReavealSpyIntent.putExtra("TIMER_LONG", timeUntilFinishTimer);
+            goToReavealSpyIntent.putExtra("TIMER_STRING", txtViewTimer.getText().toString());
+            goToReavealSpyIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+            startActivity(goToReavealSpyIntent);
+        } else {
+            Toast.makeText(GameONActivity.this, "A non-spie tried to reveal the rounds location! Game reset!",
+                    Toast.LENGTH_LONG).show();
+
+            goToLobby(getWindow().getDecorView());
+        }
+    }
+
+    public void goToLobby (View v) {
+        Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
+        goToLobbyIntent.putExtra("flag","FROM_GAMEON");
+        goToLobbyIntent.putExtra("PLAYERS", players);
+        startActivity(goToLobbyIntent);
     }
 
     public void playerBack(View v){

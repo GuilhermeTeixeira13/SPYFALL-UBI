@@ -117,4 +117,11 @@ public class NonSpiesWinActivity extends AppCompatActivity {
                 .setPositiveButton("Got it!", null)
                 .show();
     }
+
+    public void goToLobby (View v) {
+        Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
+        goToLobbyIntent.putExtra("flag","FROM_NONSPYWIN");
+        goToLobbyIntent.putExtra("PLAYERS", players);
+        startActivity(goToLobbyIntent);
+    }
 }
