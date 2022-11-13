@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Spyfall @ UBI</string>
     <string name="Lobby">Spyfall @ UBI: Lobby</string>
@@ -11,4 +12,6 @@
     <string name="SPIESWin">Spyfall @ UBI: Spies win!</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="partyGame">A party game that will help you discover UBI and Covilhã!</string>
+    <string name="playersLobby">PLAYERS</string>
 </resources>

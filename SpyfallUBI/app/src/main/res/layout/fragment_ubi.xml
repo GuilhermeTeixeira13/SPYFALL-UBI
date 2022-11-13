@@ -3,11 +3,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="UBI"
-        android:textSize="30sp" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/UBI1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="UBI"
+                android:textAlignment="center"
+                android:fontFamily="@font/roboto_black"
+                android:textColor="@color/black"
+                android:textSize="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_alignParentTop="true" />
+
+            <TextView
+                android:id="@+id/UBI2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="University of Beira Interior"
+                android:fontFamily="@font/roboto_black"
+                android:textSize="20dp"
+                android:textAlignment="center"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/UBI1"/>
+
+            <ImageView
+                android:id="@+id/UBIImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="60dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginTop="30dp"
+                android:src="@drawable/ubi"
+                android:layout_below="@+id/UBI2"/>
+
+            <TextView
+                android:id="@+id/UBI3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="UBI is a public university located in the city of Covilhã, in Portugal. In 2021, it had around 8600 students enrolled in the various courses of its training offer, which covers all academic degrees of Portuguese higher education (bachelors, masters and doctorate), as well as postgraduate courses. The university's name reflects the historical region where it is located in Portugal, known as the innermost part of the central region of the country, between the districts of Guarda and Castelo Branco."
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15dp"
+                android:textAlignment="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@+id/UBIImage"/>
+
+            <TextView
+                android:id="@+id/UBI4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="UBI is a young, dynamic and constantly developing university. Serving the region, the country and the world is a priority for the Institution through demanding training and research at the highest level, developed in a climate of proximity only possible in medium-sized cities, such as Covilhã."
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="15dp"
+                android:textAlignment="center"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_below="@+id/UBI3"/>
+        </LinearLayout>
+    </ScrollView>
 
 </RelativeLayout>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Spyfall @ UBI-PT</string>
+    <string name="Lobby">Spyfall @ UBI: Sala de espera</string>
+    <string name="WhoAreYou">Spyfall @ UBI: Quem és tu?</string>
+    <string name="Ready">Spyfall @ UBI: Pront?</string>
+    <string name="GameON">Spyfall @ UBI: Começou o jogo!!</string>
+    <string name="RevealSPY">Spyfall @ UBI: Revelar espião!</string>
+    <string name="RevealLocation">Spyfall @ UBI: Reveal Location!</string>
+    <string name="SPYEliminated">Spyfall @ UBI: Elimination!</string>
+    <string name="NONSPIESWin">Spyfall @ UBI: Non-spies win!</string>
+    <string name="SPIESWin">Spyfall @ UBI: Spies win!</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="partyGame">Um jogo de festa que o irá ajudar a descobrir a UBI e a Covilhã!</string>
+    <string name="playersLobby">JOGADORES</string>
+</resources>
