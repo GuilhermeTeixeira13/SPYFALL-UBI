@@ -30,7 +30,7 @@ public class GameONActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gameon);
 
-        setTitle(getResources().getString(R.string.GameON));
+        setTitle(getResources().getString(R.string.GameONActivity));
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");

@@ -25,7 +25,7 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whoareyouresult);
 
-        setTitle(getResources().getString(R.string.WhoAreYou));
+        setTitle(getResources().getString(R.string.WhoAreYouActivity));
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");

@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -29,7 +28,7 @@ public class NonSpiesWinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nonspieswin);
 
-        setTitle(getResources().getString(R.string.NONSPIESWin));
+        setTitle(getResources().getString(R.string.NONSPIESWinActivity));
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");

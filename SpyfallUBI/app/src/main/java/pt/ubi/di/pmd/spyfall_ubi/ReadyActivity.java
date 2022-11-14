@@ -24,7 +24,7 @@ public class ReadyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ready);
 
-        setTitle(getResources().getString(R.string.Ready));
+        setTitle(getResources().getString(R.string.ReadyActivity));
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");

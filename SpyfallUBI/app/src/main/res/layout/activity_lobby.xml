@@ -49,13 +49,14 @@
             android:paddingLeft="20dp"
             android:paddingEnd="20dp"
             android:paddingRight="20dp"
-            android:hint="Player Name"
+            android:hint="@string/LobbyAct2"
             android:textColorHint="@color/white"
             android:textAlignment="viewStart"
             android:textColor="@color/white"
             android:textSize="17dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"></EditText>
+            app:layout_constraintStart_toStartOf="parent">
+        </EditText>
 
         <ImageButton
             android:id="@+id/btn_add_player"
@@ -75,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_black"
-        android:text="@string/playersLobby"
+        android:text="@string/LobbyAct1"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="25dp"
@@ -103,7 +104,7 @@
         android:textSize="17dp"
         android:gravity="center"
         android:onClick="checkBoxClick"
-        android:text="Play in UBI/Covilhã"
+        android:text="@string/LobbyAct3"
         android:textAlignment="center"
         app:layout_constraintCircleRadius="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -118,7 +119,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/roboto_black"
-        android:text="Spies: 0"
+        android:text="@string/LobbyAct4"
         android:textAlignment="center"
         android:textColor="@color/black"
         android:textSize="18dp"
@@ -145,7 +146,7 @@
         android:layout_width="181dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="START GAME"
+        android:text="@string/LobbyAct5"
         android:textSize="17dp"
         android:textColor="@color/white"
         android:background="@drawable/rounded_corners_buttons"

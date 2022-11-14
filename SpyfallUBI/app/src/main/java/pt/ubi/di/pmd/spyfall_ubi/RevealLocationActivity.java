@@ -14,7 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -24,7 +23,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
 
 
 public class RevealLocationActivity extends AppCompatActivity {
@@ -42,7 +40,7 @@ public class RevealLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reveallocation);
 
-        setTitle(getResources().getString(R.string.RevealLocation));
+        setTitle(getResources().getString(R.string.RevealLocationActivity));
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");

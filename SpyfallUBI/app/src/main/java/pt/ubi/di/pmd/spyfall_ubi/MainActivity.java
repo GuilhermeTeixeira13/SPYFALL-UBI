@@ -32,19 +32,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Toolbar sideMenu = findViewById(R.id.toolbar);
-        setSupportActionBar(sideMenu);
+        // Toolbar
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.side_menu);
-
+        // Side menu
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, sideMenu, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer = findViewById(R.id.side_menu);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-
+        // The main activity will start on the MainPageFragment
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new MainPageFragment()).commit();
@@ -52,23 +52,25 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    // Inflating the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_landing_page, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
+    // Toolbar button clicked
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shareButton:
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Link to Playstore";
+                String shareBody = getResources().getString(R.string.Share1);
                 String shareSubject = "Spyfall @ UBI!";
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
-                startActivity(Intent.createChooser(sharingIntent, "Share using:"));
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.Share2)));
                 break;
             case R.id.homeButton:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainPageFragment()).commit();
@@ -77,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return super.onOptionsItemSelected(item);
     }
 
+    // Toolbar button clicked
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -98,6 +101,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
 
+    // Go to lobby activity
     public void goToLobby(View v) {
         Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
         startActivity(goToLobbyIntent);

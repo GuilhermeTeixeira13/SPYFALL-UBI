@@ -43,7 +43,7 @@ public class RevealSpyActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_revealspy);
 
-        setTitle(getResources().getString(R.string.RevealSPY));
+        setTitle(getResources().getString(R.string.RevealSPYActivity));
 
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");

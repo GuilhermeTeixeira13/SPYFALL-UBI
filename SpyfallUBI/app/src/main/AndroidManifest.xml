@@ -29,43 +29,43 @@
         </activity>
         <activity
             android:name=".LobbyActivity"
-            android:label="@string/Lobby">
+            android:label="@string/LobbyActivity">
         </activity>
         <activity
             android:name=".WhoAreYouActivity"
-            android:label="@string/WhoAreYou">
+            android:label="@string/WhoAreYouActivity">
         </activity>
         <activity
             android:name=".WhoAreYouResultActivity"
-            android:label="@string/WhoAreYou">
+            android:label="@string/WhoAreYouActivity">
         </activity>
         <activity
             android:name=".ReadyActivity"
-            android:label="@string/Ready">
+            android:label="@string/ReadyActivity">
         </activity>
         <activity
             android:name=".GameONActivity"
-            android:label="@string/GameON">
+            android:label="@string/GameONActivity">
         </activity>
         <activity
             android:name=".RevealSpyActivity"
-            android:label="@string/RevealSPY">
+            android:label="@string/RevealSPYActivity">
         </activity>
         <activity
             android:name=".RevealLocationActivity"
-            android:label="@string/RevealLocation">
+            android:label="@string/RevealLocationActivity">
         </activity>
         <activity
             android:name=".SpyEliminatedActivity"
-            android:label="@string/SPYEliminated">
+            android:label="@string/SPYEliminatedActivity">
         </activity>
         <activity
             android:name=".NonSpiesWinActivity"
-            android:label="@string/NONSPIESWin">
+            android:label="@string/NONSPIESWinActivity">
         </activity>
         <activity
             android:name=".SpiesWinActivity"
-            android:label="@string/SPIESWin">
+            android:label="@string/SPIESWinActivity">
         </activity>
     </application>
 
