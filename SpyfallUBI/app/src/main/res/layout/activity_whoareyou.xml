@@ -31,22 +31,22 @@
         android:id="@+id/textViewHideThePhone"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="90dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_black"
-        android:text="Hide the phone from the others and discover who you are."
+        android:text="@string/WhoAreYouAct1"
         android:textAlignment="center"
         android:textColor="@color/gray_edText"
         android:textSize="15dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/include_toolbar" />
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
     <TextView
         android:id="@+id/textViewPlayerName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="55dp"
+        android:layout_marginTop="10dp"
         android:fontFamily="@font/roboto_black"
         android:text="Player 1"
         android:textAlignment="center"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/textViewHideThePhone" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewHideThePhone" />
 
 
     <androidx.appcompat.widget.AppCompatButton
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="210dp"
         android:background="@drawable/rounded_corners_buttons"
-        android:text="Show me what I am"
+        android:text="@string/WhoAreYouAct2"
         android:textAllCaps="false"
         android:textColor="@color/white"
         android:textSize="17dp"

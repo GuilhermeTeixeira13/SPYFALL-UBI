@@ -3,11 +3,15 @@ package pt.ubi.di.pmd.spyfall_ubi;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.os.ConfigurationCompat;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 
 public class LobbyActivity extends AppCompatActivity {
     ListView ListViewPlayers;
@@ -52,7 +57,7 @@ public class LobbyActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 
-        // Check flag and inicialize objects
+        // Check flag and initialize objects
         if(checkFlag == null){
             players = new ArrayList<Player>();
         }
@@ -211,10 +216,23 @@ public class LobbyActivity extends AppCompatActivity {
     public ArrayList<Place> getPlaces(Boolean UBIPlaces) throws IOException {
         ArrayList<Place> places;
 
-        if (UBIPlaces)
-            places = readPlaces("places.txt" , "UBI");
-        else
-            places = readPlaces("places.txt" , "OTHER");
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+
+
+        if(language.equals("pt")) {
+            if (UBIPlaces)
+                places = readPlaces("placesPT.txt" , "UBI");
+            else
+                places = readPlaces("placesPT.txt" , "OTHER");
+        }
+        else {
+            if (UBIPlaces)
+                places = readPlaces("places.txt" , "UBI");
+            else
+                places = readPlaces("places.txt" , "OTHER");
+        }
 
         return places;
     }

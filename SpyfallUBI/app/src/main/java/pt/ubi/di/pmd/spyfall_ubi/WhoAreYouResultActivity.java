@@ -19,105 +19,121 @@ import java.util.ArrayList;
 public class WhoAreYouResultActivity extends AppCompatActivity {
     ArrayList<Player> players;
     Place place;
-    Integer player_visualizing = 0;
+    Integer playerVisualizing = 0;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_whoareyouresult);
 
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Change toolbar title
         setTitle(getResources().getString(R.string.WhoAreYouActivity));
 
+        // Getting the flag from the intent that he came from
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 
+        // Check flag and initialize objects
         if(checkFlag.equals("FROM_WHOAREYOU")){
             players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
             place = (Place) getIntent().getSerializableExtra("PLACE");
-            player_visualizing = (Integer) intent.getIntExtra("PLAYER_VISUALIZING", 0);
+            playerVisualizing = (Integer) intent.getIntExtra("PLAYER_VISUALIZING", 0);
         }
 
-        TextView txtViewPlayerName = (TextView) findViewById(R.id.textViewPlayerName);
-        TextView txtViewlocationName = (TextView) findViewById(R.id.locationName);
-        TextView txtViewhelp = (TextView) findViewById(R.id.help);
-        TextView txtViewPLocationSpyCard = (TextView) findViewById(R.id.textViewLocationSpyCard);
-        ImageView imageViewCard = (ImageView ) findViewById(R.id.imageViewLocation);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        Button btn_info = (Button) findViewById(R.id.btn_know_more);
-        View view2 = (View) findViewById(R.id.view2);
-        setSupportActionBar(toolbar);
+        TextView TxtViewPlayerName = (TextView) findViewById(R.id.textViewPlayerName);
+        TextView TxtViewLocationName = (TextView) findViewById(R.id.locationName);
+        TextView TxtViewHelp = (TextView) findViewById(R.id.help);
+        TextView TxtViewLocationSpyCard = (TextView) findViewById(R.id.textViewLocationSpyCard);
+        ImageView ImageViewCard = (ImageView ) findViewById(R.id.imageViewLocation);
+        Button BtnInfo = (Button) findViewById(R.id.btn_know_more);
+        View View2 = (View) findViewById(R.id.view2);
 
-        txtViewPlayerName.setText(players.get(player_visualizing).getName());
+        TxtViewPlayerName.setText(players.get(playerVisualizing).getName());
 
-        if(players.get(player_visualizing).getRole() == 0){
-            txtViewPLocationSpyCard.setText("Location card:");
-            txtViewlocationName.setText(place.getName());
-            txtViewhelp.setText("Figure out who the spy is.");
+        // If the player that is visualizing is a non-spie
+        if(players.get(playerVisualizing).getRole() == 0){
+            TxtViewLocationSpyCard.setText(getResources().getString(R.string.WhoAreYouResAct2));
+            TxtViewLocationName.setText(place.getName());
+            TxtViewHelp.setText(getResources().getString(R.string.WhoAreYouResAct5));
+
+            // Set image of the place
             Uri path = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID +  "/drawable/"+place.getImagePath());
-            imageViewCard.setImageURI(path);
+            ImageViewCard.setImageURI(path);
 
             if(place.getCategory().equals("UBI")){
-                view2.getLayoutParams().height = (int) getResources().getDimension(R.dimen.view2_height);
+                // Add extra space to the view so it can fit the additional info about UBI
+                View2.getLayoutParams().height = (int) getResources().getDimension(R.dimen.view2_height);
             }else{
-                btn_info.setVisibility(View.GONE);
+                // If the place is not in UBI/Covilhã, then it will not have the "more info" button
+                BtnInfo.setVisibility(View.GONE);
             }
         } else {
-            txtViewPLocationSpyCard.setText("Spy Card:");
-            txtViewlocationName.setText("The spy!");
-            txtViewlocationName.setTextSize(27);
-            txtViewhelp.setText("Try to guess the rounds location.");
-            btn_info.setVisibility(View.GONE);
-            imageViewCard.setImageResource(R.drawable.spy2);
+            // If the player that is visualizing is a spy
+
+            TxtViewLocationSpyCard.setText(getResources().getString(R.string.WhoAreYouResAct3));
+            TxtViewLocationName.setText(getResources().getString(R.string.WhoAreYouResAct4));
+            TxtViewLocationName.setTextSize(27);
+            TxtViewHelp.setText(getResources().getString(R.string.WhoAreYouResAct6));
+
+            // Remove the "more info" button and set the ImageViewCard with the spy image
+            BtnInfo.setVisibility(View.GONE);
+            ImageViewCard.setImageResource(R.drawable.spy2);
         }
     }
 
+    // Inflating the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_rest, menu);
         return true;
     }
 
+    // Toolbar button clicked
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shareButton:
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Link to Playstore";
+                String shareBody = getResources().getString(R.string.Share1);
                 String shareSubject = "Spyfall @ UBI!";
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
-                startActivity(Intent.createChooser(sharingIntent, "Share using:"));
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.Share2)));
                 break;
             case R.id.homeButton:
-                // Ask if we want to the lobby and lose all the current page settings
-
                 new AlertDialog.Builder(WhoAreYouResultActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Are you going to the main page?")
-                        .setMessage("Do you want to lose the current game state and go back to the main page?")
-                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                        .setTitle(getResources().getString(R.string.GoHome1))
+                        .setMessage(getResources().getString(R.string.GoHome2))
+                        .setPositiveButton(getResources().getString(R.string.YES), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                goToMainActivity();
+                                finish();
                             }
                         })
-                        .setNegativeButton("No!", null)
+                        .setNegativeButton(getResources().getString(R.string.NO), null)
                         .show();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    // It only goes to Ready activity when all the players have seen what their roles are
     public void whoAreYou (View v){
-        if(player_visualizing < players.size() - 1){
+        if(playerVisualizing < players.size() - 1){
+            // Go to WhoAreYouActivity
             Intent goToWhoAreYouIntent = new Intent(this, WhoAreYouActivity.class);
             goToWhoAreYouIntent.putExtra("flag","FROM_WHOAREYOURESULT");
             goToWhoAreYouIntent.putExtra("PLAYERS", players);
             goToWhoAreYouIntent.putExtra("PLACE", place);
-            goToWhoAreYouIntent.putExtra("PLAYER_VISUALIZING", player_visualizing + 1);
+            goToWhoAreYouIntent.putExtra("PLAYER_VISUALIZING", playerVisualizing + 1);
             startActivity(goToWhoAreYouIntent);
         }else{
-            // Go to Ready? Activity
+            // Go to ReadyActivity
             Intent goToReadyIntent = new Intent(this, ReadyActivity.class);
             goToReadyIntent.putExtra("flag","FROM_WHOAREYOURESULT");
             goToReadyIntent.putExtra("PLAYERS", players);
@@ -126,17 +142,19 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
         }
     }
 
+    // Go to MainActivity by clicking in a button
     public void goToMainActivity () {
         Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(goToMainActivityIntent);
     }
 
+    // Show adittional info about UBI places by clicking on a button
     public void showLocationInfo (View v) {
         new AlertDialog.Builder(WhoAreYouResultActivity.this)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setTitle(place.getName())
                 .setMessage(place.getInfo())
-                .setPositiveButton("Got it!", null)
+                .setPositiveButton(getResources().getString(R.string.GotIt), null)
                 .show();
     }
 }

@@ -1,0 +1,20 @@
+UBI - Biblioteca/ubi_library/Em junho de 2015, foi inaugurada a Sala Aberta na Biblioteca Central, espaço aberto 24 horas por dia, sete dias por semana. Entre as 23h00 e as 8h30, o controlo de acesso é feito passando o cartão UBI num leitor eletrónico./UBI
+UBI - Cantina/ubi_canteen/Recentemente, a cantina da boavista foi adaptada para residência./UBI
+UBI - Anfiteatro 6.01/ubi_amphitheater/Localizado no Polo I, possui mais de 210 lugares./UBI
+UBI - Passeio dos Filósofos/ubi_philosophers_tour/Pequeno jardim com bancos, junto à Biblioteca Central. Onde geralmente são vistos livros colados nas paredes, disponíveis para serem levados pelos alunos./UBI
+UBI - Faculdade de Ciências da Saúde/ubi_faculty_health_sciences/A Faculdade de Ciências da Saúde (FCS) é uma faculdade que ministra cursos na área da saúde, parte integrante da UBI. Foi criado em 1998 e iniciou suas atividades de ensino em 2001 com o início do curso de Medicina./UBI
+UBI - Faculdade de Engenharia/ubi_engineering_faculty/A aeronave Cessna T37, que durante cerca de 30 anos esteve colocada no parque de estacionamento do Polo I da Universidade da Beira Interior (UBI), encontra-se agora exposta à entrada da Faculdade de Engenharia./UBI
+Covilhã -  Hospital/covilha_hospital/Para fazer face à falta de condições e às precárias acessibilidades do antigo hospital Pêro da Covilhã construído em 1908, o CHCB foi inaugurado a 17 de Janeiro de 2000./UBI
+Covilhã - Serra Shopping/covilha_serra_shopping/O Serra Shopping foi inaugurado em 2005. Quanto à arquitetura, tem como tema a montanha e os elementos a ela associados, como a neve. O exterior segue uma linha de volumes, em materiais como pedra, madeira e vidro, enquanto no interior a ênfase recai nos detalhes em madeira, prevalecendo o rústico./UBI
+Covilhã - Torre/covilha_torre/A "Torre" é o ponto mais alto de Portugal Continental com 2000 metros de altitude. É famosa pela queda de neve durante os meses de inverno, atraindo um grande número de turistas. Durante o verão, em dias claros, a vista pode ir até ao mar, com a zona da Figueira da Foz ao longe./UBI
+Covilhã - Museu de Lanifícios/covilha_wool_museum/No Museu dem Lanifícios é possível conhecer uma das indústrias mais antigas, a da lã, que começou por afirmar-se como um puro acto de sobrevivência da espécie humana e assumiu, ao longo do tempo, uma crescente qualidade e tecnicidade. expressão artística. , que tem acompanhado o desenvolvimento das nossas sociedades até ao presente./UBI
+Avião/air_plane/ /OTHER
+Praia/beach/ /OTHER
+Supermercado/supermarket/ /OTHER
+Restaurante/restaurant/ /OTHER
+Hospital/hospital/ /OTHER
+Escola/school/ /OTHER
+Zológico/zoo/ /OTHER
+Banco/bank/ /OTHER
+Discoteca/night_club/ /OTHER
+Estação espacial/space_station/ /OTHER

@@ -51,4 +51,12 @@
     <string name="LobbyAct3">Jogar na UBI/Covilhã</string>
     <string name="LobbyAct4">Espiões: </string>
     <string name="LobbyAct5">COMEÇAR JOGO</string>
+    <string name="WhoAreYouAct1">Esconde o telemóvel da vista dos outros jogadores e descobre quem és!</string>
+    <string name="WhoAreYouAct2">Mostra-me o que sou</string>
+    <string name="WhoAreYouResAct1">Clique no botão e passe o telemóvel para o próximo jogador.</string>
+    <string name="WhoAreYouResAct2">Carta de localização:</string>
+    <string name="WhoAreYouResAct3">Carta de espião:</string>
+    <string name="WhoAreYouResAct4">O espião!</string>
+    <string name="WhoAreYouResAct5">Descubra quem é o espião!</string>
+    <string name="WhoAreYouResAct6">Tente adivinhar a localização da ronda!</string>
 </resources>

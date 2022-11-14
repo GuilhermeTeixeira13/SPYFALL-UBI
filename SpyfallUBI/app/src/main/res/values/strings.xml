@@ -51,4 +51,13 @@
     <string name="LobbyAct3">Play in UBI/Covilhã</string>
     <string name="LobbyAct4">Spies: </string>
     <string name="LobbyAct5">START GAME</string>
+    <string name="WhoAreYouAct1">Hide the phone from the others and discover who you are.</string>
+    <string name="WhoAreYouAct2">Show me what I am</string>
+    <string name="WhoAreYouResAct1">Click the button and pass the phone to the next player.</string>
+    <string name="WhoAreYouResAct2">Location card:</string>
+    <string name="WhoAreYouResAct3">Spy card:</string>
+    <string name="WhoAreYouResAct4">The spy!</string>
+    <string name="WhoAreYouResAct5">Figure out who the spy is.</string>
+    <string name="WhoAreYouResAct6">Try to guess the rounds location.</string>
+
 </resources>
