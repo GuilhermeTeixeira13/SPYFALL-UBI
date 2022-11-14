@@ -51,6 +51,8 @@ public class LobbyActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        setTitle(getResources().getString(R.string.Lobby));
+
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 

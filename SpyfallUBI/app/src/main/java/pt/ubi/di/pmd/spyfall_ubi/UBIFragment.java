@@ -12,6 +12,7 @@ public class UBIFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(getResources().getString(R.string.UBIFragment));
         return inflater.inflate(R.layout.fragment_ubi, container, false);
     }
 }

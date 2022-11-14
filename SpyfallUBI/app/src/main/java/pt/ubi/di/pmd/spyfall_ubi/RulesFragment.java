@@ -11,6 +11,7 @@ public class RulesFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        getActivity().setTitle(getResources().getString(R.string.RulesFragment));
         return inflater.inflate(R.layout.fragment_rules, container, false);
     }
 }

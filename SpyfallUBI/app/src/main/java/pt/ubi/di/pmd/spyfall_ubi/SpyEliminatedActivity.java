@@ -32,6 +32,8 @@ public class SpyEliminatedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spyeliminated);
 
+        setTitle(getResources().getString(R.string.SPYEliminated));
+
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 

@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -34,6 +35,8 @@ public class MainPageFragment extends Fragment {
 
         btnPT = (Button) view.findViewById(R.id.changePT);
         btnEN = (Button) view.findViewById(R.id.changeENG);
+
+        getActivity().setTitle(getResources().getString(R.string.app_name));
 
         btnPT.setOnClickListener(new View.OnClickListener() {
             @Override

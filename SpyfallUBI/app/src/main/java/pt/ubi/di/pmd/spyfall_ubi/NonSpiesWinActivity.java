@@ -29,6 +29,8 @@ public class NonSpiesWinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nonspieswin);
 
+        setTitle(getResources().getString(R.string.NONSPIESWin));
+
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 

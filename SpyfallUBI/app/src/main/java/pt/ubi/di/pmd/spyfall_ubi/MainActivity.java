@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                     new MainPageFragment()).commit();
@@ -90,10 +91,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_ubiinfo:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new UBIFragment()).commit();
-                break;
-            case R.id.nav_personalinfo:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new AboutMeFragment()).commit();
                 break;
         }
 

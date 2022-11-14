@@ -42,6 +42,8 @@ public class RevealLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reveallocation);
 
+        setTitle(getResources().getString(R.string.RevealLocation));
+
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 

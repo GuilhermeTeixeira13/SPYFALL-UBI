@@ -13,8 +13,5 @@
         <item android:id="@+id/nav_ubiinfo"
             android:icon="@drawable/school_icon"
             android:title="UBI"/>
-        <item android:id="@+id/nav_personalinfo"
-            android:icon="@drawable/personinfo_icon"
-            android:title="Developer's Info"/>
     </group>
 </menu>

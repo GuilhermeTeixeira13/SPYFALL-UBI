@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Spyfall @ UBI-PT</string>
     <string name="Lobby">Spyfall @ UBI: Sala de espera</string>
+    <string name="RulesFragment">Spyfall @ UBI: Regras</string>
+    <string name="UBIFragment">Spyfall @ UBI: UBI</string>
     <string name="WhoAreYou">Spyfall @ UBI: Quem és tu?</string>
     <string name="Ready">Spyfall @ UBI: Pront?</string>
     <string name="GameON">Spyfall @ UBI: Começou o jogo!!</string>

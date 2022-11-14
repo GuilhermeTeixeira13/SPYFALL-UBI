@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Spyfall @ UBI</string>
+    <string name="app_name">Spyfall @ UBI-EN</string>
     <string name="Lobby">Spyfall @ UBI: Lobby</string>
+    <string name="RulesFragment">Spyfall @ UBI: Rules</string>
+    <string name="UBIFragment">Spyfall @ UBI: UBI</string>
     <string name="WhoAreYou">Spyfall @ UBI: Who are you?</string>
     <string name="Ready">Spyfall @ UBI: Ready?</string>
     <string name="GameON">Spyfall @ UBI: Game ON!</string>
