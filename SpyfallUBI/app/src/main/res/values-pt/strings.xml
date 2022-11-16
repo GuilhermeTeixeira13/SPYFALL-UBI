@@ -67,4 +67,18 @@
     <string name="GameONAct4">REVElAR ESPIÃO</string>
     <string name="GameONAct5">Se você é um espião:</string>
     <string name="GameONAct6">REVELAR LOCAL:</string>
+    <string name="spy">Espião: </string>
+    <string name="spies">Espiões: </string>
+    <string name="NonSpiesWinAct1">CIVIS GANHARAM!</string>
+    <string name="lobby">SALA DE ESPERA</string>
+    <string name="RevealLocationAct1">Onde estão os civis?</string>
+    <string name="RevealLocationAct2">Faça a sua escolha:</string>
+    <string name="RevealSpyAct1">Faça a sua escolha:</string>
+    <string name="SpiesWin">ESPIÕES GANHARAM!</string>
+    <string name="SpyWin">ESPIÃO GANHOU!</string>
+    <string name="points">pontos</string>
+    <string name="SpyEliminatedAct1">Espião eliminado!</string>
+    <string name="SpyEliminatedAct2">O espião</string>
+    <string name="SpyEliminatedAct3">foi eliminado e não pode jogar mais.</string>
+    <string name="SpyEliminatedAct4">CONTINUAR JOGO</string>
 </resources>

@@ -18,7 +18,7 @@ import androidx.appcompat.widget.Toolbar;
 import java.util.ArrayList;
 
 public class SpiesWinActivity extends AppCompatActivity {
-    ArrayList<Player> players;
+    ArrayList<Player> playersActive;
     Place place;
     TextView TxtViewLocationName;
     TextView TxtViewSpyWin;
@@ -29,11 +29,20 @@ public class SpiesWinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_spieswin);
 
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Change toolbar title
+        setTitle(getResources().getString(R.string.SPIESWinActivity));
+
+        // Getting the flag from the intent that he came from
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 
+        // Check flag and initialize objects
         if(checkFlag.equals("FROM_REVEALSPY")){
-            players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
+            playersActive = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
             place = (Place) getIntent().getSerializableExtra("PLACE");
         }
 
@@ -42,24 +51,22 @@ public class SpiesWinActivity extends AppCompatActivity {
 
         TxtViewSpyWin = (TextView) findViewById(R.id.textSpiesWin);
         TxtViewSpies= (TextView) findViewById(R.id.spies);
-        String spies = getSpies(players);
+        String spies = getSpies(playersActive);
         if(spies.contains("/")){
-            TxtViewSpies.setText("Spies: "+spies);
-            TxtViewSpyWin.setText("SPIES WIN!");
+            TxtViewSpies.setText(getResources().getString(R.string.spies)+spies);
+            TxtViewSpyWin.setText(getResources().getString(R.string.SpiesWin));
         }
         else {
-            TxtViewSpies.setText("Spy: "+spies);
-            TxtViewSpyWin.setText("SPY WIN!");
+            TxtViewSpies.setText(getResources().getString(R.string.spy)+spies);
+            TxtViewSpyWin.setText(getResources().getString(R.string.SpyWin));
         }
 
         ImgLocation = (ImageView) findViewById(R.id.imageViewLocation);
         Uri path = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID +  "/drawable/"+place.getImagePath());
         ImgLocation.setImageURI(path);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 
+    // It returns a string with the name of the spies in the game
     public String getSpies(ArrayList<Player> players){
         String spies = "";
 
@@ -71,62 +78,65 @@ public class SpiesWinActivity extends AppCompatActivity {
         return spies.substring(0, spies.length() - 1);
     }
 
+    // Inflating the toolbar
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.toolbar_rest, menu);
         return true;
     }
 
+    // Toolbar button clicked
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.shareButton:
                 Intent sharingIntent = new Intent(Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "Link to Playstore";
+                String shareBody = getResources().getString(R.string.Share1);
                 String shareSubject = "Spyfall @ UBI!";
                 sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
                 sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
-                startActivity(Intent.createChooser(sharingIntent, "Share using:"));
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.Share2)));
                 break;
             case R.id.homeButton:
-                // Ask if we want to the lobby and lose all the current page settings
-
                 new AlertDialog.Builder(SpiesWinActivity.this)
                         .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Are you going to the main page?")
-                        .setMessage("Do you want to lose the current game state and go back to the main page?")
-                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
+                        .setTitle(getResources().getString(R.string.GoHome1))
+                        .setMessage(getResources().getString(R.string.GoHome2))
+                        .setPositiveButton(getResources().getString(R.string.YES), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 goToMainActivity();
                             }
                         })
-                        .setNegativeButton("No!", null)
+                        .setNegativeButton(getResources().getString(R.string.NO), null)
                         .show();
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    // Go to MainActivity by clicking in a button
     public void goToMainActivity () {
         Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
         startActivity(goToMainActivityIntent);
     }
 
+    // Show dialog box with additional info about the place where civilians are
     public void showLocationInfo (View v) {
         new AlertDialog.Builder(SpiesWinActivity.this)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setTitle(place.getName())
                 .setMessage(place.getInfo())
-                .setPositiveButton("Got it!", null)
+                .setPositiveButton(getResources().getString(R.string.GotIt), null)
                 .show();
     }
 
+    // Go to Lobby by clicking in a button
     public void goToLobby (View v) {
         Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
         goToLobbyIntent.putExtra("flag","FROM_SPYWIN");
-        goToLobbyIntent.putExtra("PLAYERS", players);
+        goToLobbyIntent.putExtra("PLAYERS", playersActive);
         startActivity(goToLobbyIntent);
     }
 }

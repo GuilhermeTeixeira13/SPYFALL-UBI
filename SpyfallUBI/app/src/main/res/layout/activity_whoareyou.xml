@@ -60,7 +60,7 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/BtnShowMe"
-        android:layout_width="181dp"
+        android:layout_width="185dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="210dp"
         android:background="@drawable/rounded_corners_buttons"

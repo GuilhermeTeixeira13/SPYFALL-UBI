@@ -27,12 +27,12 @@ import java.util.ArrayList;
 
 
 public class RevealLocationActivity extends AppCompatActivity {
-    ArrayList<Player> players;
-    ArrayList<Player> players_kicked;
-    ArrayList<Player> players_completed;
+    ArrayList<Player> playersActive;
+    ArrayList<Player> playersKicked;
+    ArrayList<Player> playersCompleted;
     Place place;
     ArrayList<Place> allPlaces;
-    int player_voting;
+    int playerVoting;
     long timer;
     String timerStr;
 
@@ -41,37 +41,86 @@ public class RevealLocationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reveallocation);
 
-        setTitle(getResources().getString(R.string.RevealLocationActivity));
-
-        Intent intent = getIntent();
-        String checkFlag= intent.getStringExtra("flag");
-
-        if(checkFlag.equals("FROM_GAMEON")){
-            players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
-            place = (Place) getIntent().getSerializableExtra("PLACE");
-            player_voting = (int) getIntent().getSerializableExtra("PLAYER_VOTING");
-            timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
-            timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
-            players_completed = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
-            players_kicked = (ArrayList<Player>) players_completed.clone();
-            players_kicked.removeAll(players);
-        }
-
+        // Toolbar
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // Change toolbar title
+        setTitle(getResources().getString(R.string.RevealLocationActivity));
+
+        // Getting the flag from the intent that he came from
+        Intent intent = getIntent();
+        String checkFlag= intent.getStringExtra("flag");
+
+        // Check flag and initialize objects
+        if(checkFlag.equals("FROM_GAMEON")){
+            playersActive = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
+            place = (Place) getIntent().getSerializableExtra("PLACE");
+            playerVoting = (int) getIntent().getSerializableExtra("PLAYER_VOTING");
+            timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
+            timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
+            playersCompleted = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
+            playersKicked = (ArrayList<Player>) playersCompleted.clone();
+            playersKicked.removeAll(playersActive);
+        }
+
+        // Getting all the places available considering the "game mode" -> UBI or OTHER
         try {
             allPlaces = getPlaces(place.getCategory().equals("UBI") ? true : false);
-            System.out.println(allPlaces);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        // Initialize ListView with all the places
         ListView lv = (ListView) findViewById(R.id.listviewlocations);
         lv.setAdapter(new MyListAdaper(this, R.layout.list_locations, allPlaces));
     }
 
+    // Inflating the toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_rest, menu);
+        return true;
+    }
 
+    // Toolbar button clicked
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shareButton:
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = getResources().getString(R.string.Share1);
+                String shareSubject = "Spyfall @ UBI!";
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.Share2)));
+                break;
+            case R.id.homeButton:
+                new AlertDialog.Builder(RevealLocationActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(getResources().getString(R.string.GoHome1))
+                        .setMessage(getResources().getString(R.string.GoHome2))
+                        .setPositiveButton(getResources().getString(R.string.YES), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                goToMainActivity();
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.NO), null)
+                        .show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Go to MainActivity by clicking in a button
+    public void goToMainActivity () {
+        Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(goToMainActivityIntent);
+    }
+
+    // List adapter class
     private class MyListAdaper extends ArrayAdapter<Place> {
         private int layout;
         private ArrayList<Place> mObjects;
@@ -83,6 +132,8 @@ public class RevealLocationActivity extends AppCompatActivity {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
+            // Initialize List elements
+
             ViewHolder mainViewholder = null;
             if(convertView == null) {
                 LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -94,25 +145,26 @@ public class RevealLocationActivity extends AppCompatActivity {
             }
             mainViewholder = (ViewHolder) convertView.getTag();
             ViewHolder finalMainViewholder = mainViewholder;
+
+            // Listener for clicks in some of the List elements
             mainViewholder.btnVote.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(allPlaces.get(position).equals(place)){
-                        // Spies win
-                        players_completed.get(player_voting).setPoints(players_completed.get(player_voting).getPoints() + 4);
-
+                        // If the item clicked corresponds to the current place -> Spies win
+                        playersCompleted.get(playerVoting).setPoints(playersCompleted.get(playerVoting).getPoints() + 4);
                         goToSpiesWin(getWindow().getDecorView());
                     } else {
-                        int numpSpies = getNumberOfSpies(players);
+                        int numpSpies = getNumberOfSpies(playersActive);
 
                         if(numpSpies > 1) {
-                            // A spy got kicked and the game proceeds
-                            Player SpyToEliminate = players.get(player_voting);
-                            players.remove(SpyToEliminate);
+                            // Bad prediction -> The spy who vote get kicked and the game proceeds
+                            Player SpyToEliminate = playersActive.get(playerVoting);
+                            playersActive.remove(SpyToEliminate);
                             goToSpyEliminated(getWindow().getDecorView(), SpyToEliminate);
                         } else {
-                            // Non-spies win
-                            points(players_completed, players_kicked, 0, 1);
+                            // Bad prediction -> Non-spies win because the last spy alive was eliminated
+                            points(playersCompleted, playersKicked, 0, 1);
                             goToNonSpiesWin(getWindow().getDecorView());
                         }
                     }
@@ -125,19 +177,22 @@ public class RevealLocationActivity extends AppCompatActivity {
         }
     }
 
-    public static void points(ArrayList<Player> players_completed, ArrayList<Player> players_kicked, Integer role, Integer points){
-        for(int i=0; i<players_completed.size(); i++) {
-            if (players_completed.get(i).getRole().equals(role) && !players_kicked.contains(players_completed.get(i))) {
-                players_completed.get(i).setPoints(players_completed.get(i).getPoints() + points);
-            }
-        }
-    }
-
+    // Each item of the list has 2 attributes: location and a button that allow the spy to vote
     public class ViewHolder {
         TextView location;
         Button btnVote;
     }
 
+    // Set playersActive scores by role, considering the spies that were kicked, so they don't receive points
+    public static void points(ArrayList<Player> players_completed, ArrayList<Player> players_kicked, Integer role, Integer points){
+        for(int i=0; i<players_completed.size(); i++) {
+            if (players_completed.get(i).getRole().equals(role) && !players_kicked.contains(players_completed.get(i)))
+                players_completed.get(i).setPoints(players_completed.get(i).getPoints() + points);
+        }
+    }
+
+
+    // Return the number of spies in the list of players
     public int getNumberOfSpies(ArrayList<Player> players){
         int spieCount = 0;
         for(int i=0; i< players.size(); i++){
@@ -148,6 +203,7 @@ public class RevealLocationActivity extends AppCompatActivity {
         return spieCount;
     }
 
+    // Read places that have a certain category ("UBI" or "OTHER") to an ArrayList of places
     public ArrayList<Place> readPlaces(String filepath, String category) throws IOException {
         BufferedReader reader = null;
         ArrayList<Place> places = new ArrayList<Place>();
@@ -205,98 +261,58 @@ public class RevealLocationActivity extends AppCompatActivity {
         return places;
     }
 
+    // Go to GameONActivity
     public void goToGame(View v){
         Intent goToGameONIntent = new Intent(this, GameONActivity.class);
         goToGameONIntent.putExtra("flag","FROM_REVEALSPY");
-        goToGameONIntent.putExtra("PLAYERS", players);
+        goToGameONIntent.putExtra("PLAYERS", playersActive);
         goToGameONIntent.putExtra("PLACE", place);
-        goToGameONIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, players.size()));
+        goToGameONIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, playersActive.size()));
         goToGameONIntent.putExtra("TIMER", timer);
-        goToGameONIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        goToGameONIntent.putExtra("PLAYERS_COMPLETED", playersCompleted);
         startActivity(goToGameONIntent);
     }
 
+    // Go to NonSpiesWinActivity
     public void goToNonSpiesWin(View v){
         Intent goToNonSpiesWinIntent = new Intent(this, NonSpiesWinActivity.class);
         goToNonSpiesWinIntent.putExtra("flag","FROM_REVEALSPY");
-        goToNonSpiesWinIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        goToNonSpiesWinIntent.putExtra("PLAYERS_COMPLETED", playersCompleted);
         goToNonSpiesWinIntent.putExtra("PLACE", place);
         startActivity(goToNonSpiesWinIntent);
     }
 
+    // Go to SpiesWinActivity
     public void goToSpiesWin(View v){
         Intent goToSpiesWinIntent = new Intent(this, SpiesWinActivity.class);
         goToSpiesWinIntent.putExtra("flag","FROM_REVEALSPY");
-        System.out.println(players_completed);
-        System.out.println(players_kicked);
-        goToSpiesWinIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        goToSpiesWinIntent.putExtra("PLAYERS_COMPLETED", playersCompleted);
         goToSpiesWinIntent.putExtra("PLACE", place);
         startActivity(goToSpiesWinIntent);
     }
 
+    // Go to SpyEliminatedActivity
     public void goToSpyEliminated(View v, Player playerElimiando){
         Intent goToSpyEliminatedIntent = new Intent(this, SpyEliminatedActivity.class);
         goToSpyEliminatedIntent.putExtra("flag","FROM_REVEALSPY");
-        goToSpyEliminatedIntent.putExtra("PLAYERS", players);
+        goToSpyEliminatedIntent.putExtra("PLAYERS", playersActive);
         goToSpyEliminatedIntent.putExtra("PLACE", place);
-        goToSpyEliminatedIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, players.size()));
+        goToSpyEliminatedIntent.putExtra("PLAYER_PLAYING", getRandomNumber(0, playersActive.size()));
         goToSpyEliminatedIntent.putExtra("TIMER", timer);
         goToSpyEliminatedIntent.putExtra("PLAYER_ELIMINATED", playerElimiando);
-        goToSpyEliminatedIntent.putExtra("PLAYERS_COMPLETED", players_completed);
+        goToSpyEliminatedIntent.putExtra("PLAYERS_COMPLETED", playersCompleted);
         startActivity(goToSpyEliminatedIntent);
     }
 
+    // Go to LobbyActivity
     public void goToLobby (View v) {
         Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
         goToLobbyIntent.putExtra("flag","FROM_REVEALLOCATION");
-        goToLobbyIntent.putExtra("PLAYERS", players_completed);
+        goToLobbyIntent.putExtra("PLAYERS", playersCompleted);
         startActivity(goToLobbyIntent);
     }
 
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_rest, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.shareButton:
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "Link to Playstore";
-                String shareSubject = "Spyfall @ UBI!";
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
-                startActivity(Intent.createChooser(sharingIntent, "Share using:"));
-                break;
-            case R.id.homeButton:
-                // Ask if we want to the lobby and lose all the current page settings
-
-                new AlertDialog.Builder(RevealLocationActivity.this)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Are you going to the main page?")
-                        .setMessage("Do you want to lose the current game state and go back to the main page?")
-                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                goToMainActivity();
-                            }
-                        })
-                        .setNegativeButton("No!", null)
-                        .show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void goToMainActivity () {
-        Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
-        startActivity(goToMainActivityIntent);
     }
 }

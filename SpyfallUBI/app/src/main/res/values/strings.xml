@@ -67,4 +67,18 @@
     <string name="GameONAct4">REVEAL SPY</string>
     <string name="GameONAct5">If you are a spy:</string>
     <string name="GameONAct6">REVEAL PLACE:</string>
+    <string name="spy">Spy: </string>
+    <string name="spies">Spies: </string>
+    <string name="NonSpiesWinAct1">NON-SPIES WIN!</string>
+    <string name="lobby">LOBBY</string>
+    <string name="RevealLocationAct1">Where are the civilians?</string>
+    <string name="RevealLocationAct2">Make your choice:</string>
+    <string name="RevealSpyAct1">Make your choice:</string>
+    <string name="SpiesWin">SPIES WIN!</string>
+    <string name="SpyWin">SPY WIN!</string>
+    <string name="points">points</string>
+    <string name="SpyEliminatedAct1">Spy eliminated!</string>
+    <string name="SpyEliminatedAct2">The spy</string>
+    <string name="SpyEliminatedAct3">has been eliminated and can\'t play anymore.</string>
+    <string name="SpyEliminatedAct4">KEEP PLAYING</string>
     </resources>

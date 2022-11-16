@@ -28,11 +28,18 @@ public class NonSpiesWinActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nonspieswin);
 
+        // Toolbar
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // Change toolbar title
         setTitle(getResources().getString(R.string.NONSPIESWinActivity));
 
+        // Getting the flag from the intent that he came from
         Intent intent = getIntent();
         String checkFlag= intent.getStringExtra("flag");
 
+        // Check flag and initialize objects
         if(checkFlag.equals("FROM_REVEALSPY")){
             players = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
             place = (Place) getIntent().getSerializableExtra("PLACE");
@@ -44,18 +51,60 @@ public class NonSpiesWinActivity extends AppCompatActivity {
         TxtViewSpies= (TextView) findViewById(R.id.spies);
         String spies = getSpies(players);
         if(spies.contains("/"))
-            TxtViewSpies.setText("Spies: "+spies);
+            TxtViewSpies.setText(getResources().getString(R.string.spies) + spies);
         else
-            TxtViewSpies.setText("Spy: "+spies);
+            TxtViewSpies.setText(getResources().getString(R.string.spy) + spies);
 
         ImgLocation = (ImageView) findViewById(R.id.imageViewLocation);
         Uri path = Uri.parse("android.resource://" + BuildConfig.APPLICATION_ID +  "/drawable/"+place.getImagePath());
         ImgLocation.setImageURI(path);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
     }
 
+    // Inflating the toolbar
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.toolbar_rest, menu);
+        return true;
+    }
+
+    // Toolbar button clicked
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.shareButton:
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                sharingIntent.setType("text/plain");
+                String shareBody = getResources().getString(R.string.Share1);
+                String shareSubject = "Spyfall @ UBI!";
+                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
+                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
+                startActivity(Intent.createChooser(sharingIntent, getResources().getString(R.string.Share2)));
+                break;
+            case R.id.homeButton:
+                new AlertDialog.Builder(NonSpiesWinActivity.this)
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setTitle(getResources().getString(R.string.GoHome1))
+                        .setMessage(getResources().getString(R.string.GoHome2))
+                        .setPositiveButton(getResources().getString(R.string.YES), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                goToMainActivity();
+                            }
+                        })
+                        .setNegativeButton(getResources().getString(R.string.NO), null)
+                        .show();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Go to MainActivity by clicking in a button
+    public void goToMainActivity () {
+        Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(goToMainActivityIntent);
+    }
+
+    // It returns a string with the name of the spies in the game
     public String getSpies(ArrayList<Player> players){
         String spies = "";
 
@@ -67,58 +116,17 @@ public class NonSpiesWinActivity extends AppCompatActivity {
         return spies.substring(0, spies.length() - 1);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.toolbar_rest, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.shareButton:
-                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
-                sharingIntent.setType("text/plain");
-                String shareBody = "Link to Playstore";
-                String shareSubject = "Spyfall @ UBI!";
-                sharingIntent.putExtra(Intent.EXTRA_TEXT, shareBody);
-                sharingIntent.putExtra(Intent.EXTRA_SUBJECT, shareSubject);
-                startActivity(Intent.createChooser(sharingIntent, "Share using:"));
-                break;
-            case R.id.homeButton:
-                // Ask if we want to the lobby and lose all the current page settings
-
-                new AlertDialog.Builder(NonSpiesWinActivity.this)
-                        .setIcon(android.R.drawable.ic_dialog_alert)
-                        .setTitle("Are you going to the main page?")
-                        .setMessage("Do you want to lose the current game state and go back to the main page?")
-                        .setPositiveButton("Yes!", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                goToMainActivity();
-                            }
-                        })
-                        .setNegativeButton("No!", null)
-                        .show();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void goToMainActivity () {
-        Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
-        startActivity(goToMainActivityIntent);
-    }
-
+    // Show dialog box with additional info about the place where civilians are
     public void showLocationInfo (View v) {
         new AlertDialog.Builder(NonSpiesWinActivity.this)
                 .setIcon(android.R.drawable.ic_dialog_info)
                 .setTitle(place.getName())
                 .setMessage(place.getInfo())
-                .setPositiveButton("Got it!", null)
+                .setPositiveButton(getResources().getString(R.string.GotIt), null)
                 .show();
     }
 
+    // Go to Lobby by clicking in a button
     public void goToLobby (View v) {
         Intent goToLobbyIntent = new Intent(this, LobbyActivity.class);
         goToLobbyIntent.putExtra("flag","FROM_NONSPYWIN");

@@ -85,7 +85,7 @@ public class LobbyActivity extends AppCompatActivity {
                 TextView text2 = view.findViewById(android.R.id.text2);
 
                 text1.setText(players.get(position).getName());
-                text2.setText(players.get(position).getPoints()+" points");
+                text2.setText(players.get(position).getPoints()+" " +getResources().getString(R.string.points));
                 return view;
             }
         };
