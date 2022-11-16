@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -178,14 +179,27 @@ public class RevealLocationActivity extends AppCompatActivity {
         return places;
     }
 
+    // If UBIPlaces is true, read UBI places from file and put them in a list
+    // If UBIPlaces is false, read OTHER places from file and put them in a list
     public ArrayList<Place> getPlaces(Boolean UBIPlaces) throws IOException {
         ArrayList<Place> places;
 
-        if (UBIPlaces) {
-            places = readPlaces("places.txt" , "UBI");
+        String langPref = "Language";
+        SharedPreferences prefs = getSharedPreferences("CommonPrefs", MODE_PRIVATE);
+        String language = prefs.getString(langPref, "");
+
+
+        if(language.equals("pt")) {
+            if (UBIPlaces)
+                places = readPlaces("placesPT.txt" , "UBI");
+            else
+                places = readPlaces("placesPT.txt" , "OTHER");
         }
-        else{
-            places = readPlaces("places.txt" , "OTHER");
+        else {
+            if (UBIPlaces)
+                places = readPlaces("places.txt" , "UBI");
+            else
+                places = readPlaces("places.txt" , "OTHER");
         }
 
         return places;

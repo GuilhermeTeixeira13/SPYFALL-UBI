@@ -59,5 +59,12 @@
     <string name="WhoAreYouResAct4">The spy!</string>
     <string name="WhoAreYouResAct5">Figure out who the spy is.</string>
     <string name="WhoAreYouResAct6">Try to guess the rounds location.</string>
-
-</resources>
+    <string name="ReadyAct1">This player starts asking:</string>
+    <string name="ReadyAct2">START PLAYING</string>
+    <string name="GameONAct1">Forced voting will begin in:</string>
+    <string name="GameONAct2">The player that is asking the question should have the phone on his hand!</string>
+    <string name="GameONAct3">If you are a civilian:</string>
+    <string name="GameONAct4">REVEAL SPY</string>
+    <string name="GameONAct5">If you are a spy:</string>
+    <string name="GameONAct6">REVEAL PLACE:</string>
+    </resources>

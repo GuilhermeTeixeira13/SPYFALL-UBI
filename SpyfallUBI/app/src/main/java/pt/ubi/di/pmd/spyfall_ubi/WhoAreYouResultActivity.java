@@ -122,7 +122,7 @@ public class WhoAreYouResultActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // It only goes to Ready activity when all the players have seen what their roles are
+    // It only goes to Ready activity when all the playersActive have seen what their roles are
     public void whoAreYou (View v){
         if(playerVisualizing < players.size() - 1){
             // Go to WhoAreYouActivity

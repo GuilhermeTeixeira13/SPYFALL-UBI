@@ -5,7 +5,7 @@
     <string name="RulesFragment">Spyfall @ UBI: Regras</string>
     <string name="UBIFragment">Spyfall @ UBI: UBI</string>
     <string name="WhoAreYouActivity">Spyfall @ UBI: Quem és tu?</string>
-    <string name="ReadyActivity">Spyfall @ UBI: Pront?</string>
+    <string name="ReadyActivity">Spyfall @ UBI: Pronto?</string>
     <string name="GameONActivity">Spyfall @ UBI: Começou o jogo!!</string>
     <string name="RevealSPYActivity">Spyfall @ UBI: Revelar espião!</string>
     <string name="RevealLocationActivity">Spyfall @ UBI: Revelar localização!</string>
@@ -59,4 +59,12 @@
     <string name="WhoAreYouResAct4">O espião!</string>
     <string name="WhoAreYouResAct5">Descubra quem é o espião!</string>
     <string name="WhoAreYouResAct6">Tente adivinhar a localização da ronda!</string>
+    <string name="ReadyAct1">Este jogador começa a perguntar:</string>
+    <string name="ReadyAct2">COMEÇAR A JOGAR</string>
+    <string name="GameONAct1">Votação forçada começará em:</string>
+    <string name="GameONAct2">O jogador que está a fazer a pergunta deve ter o telemóvel na mão!</string>
+    <string name="GameONAct3">Se você é um civil:</string>
+    <string name="GameONAct4">REVElAR ESPIÃO</string>
+    <string name="GameONAct5">Se você é um espião:</string>
+    <string name="GameONAct6">REVELAR LOCAL:</string>
 </resources>

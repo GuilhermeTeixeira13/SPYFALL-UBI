@@ -29,7 +29,8 @@
         </activity>
         <activity
             android:name=".LobbyActivity"
-            android:label="@string/LobbyActivity">
+            android:label="@string/LobbyActivity"
+            android:windowSoftInputMode="adjustPan">
         </activity>
         <activity
             android:name=".WhoAreYouActivity"

@@ -73,10 +73,10 @@ public class LobbyActivity extends AppCompatActivity {
         CheckBoxUBI = findViewById(R.id.checkBoxUBI);
         TextViewNumberOfSpies = findViewById(R.id.number_of_spies);
 
-        // Sort players by their score
+        // Sort playersActive by their score
         Collections.sort(players, (o1, o2) -> o2.getPoints() - o1.getPoints());
 
-        // Put the players and their scores in the list
+        // Put the playersActive and their scores in the list
         adapter = new ArrayAdapter(getApplicationContext(), android.R.layout.simple_list_item_2, android.R.id.text1, players) {
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
@@ -145,7 +145,7 @@ public class LobbyActivity extends AppCompatActivity {
                         .setPositiveButton(getResources().getString(R.string.YES), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
-                                finish();
+                                goToMainActivity();
                             }
                         })
                         .setNegativeButton(getResources().getString(R.string.NO), null)
@@ -155,7 +155,13 @@ public class LobbyActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    // Update the number of spies -> If there are more then 5 players then the game will have 2 spies
+    // Go to MainActivity by clicking in a button
+    public void goToMainActivity () {
+        Intent goToMainActivityIntent = new Intent(this, MainActivity.class);
+        startActivity(goToMainActivityIntent);
+    }
+
+    // Update the number of spies -> If there are more then 5 playersActive then the game will have 2 spies
     public void updateNumberOfSpies(){
         if (players.isEmpty())
             numberOfSpies = 0;
@@ -183,7 +189,7 @@ public class LobbyActivity extends AppCompatActivity {
             CheckBoxResult = false;
     }
 
-    // Sets players roles by previously generating random positions for the spies
+    // Sets playersActive roles by previously generating random positions for the spies
     public void setPlayersRoles(ArrayList<Player> players){
         int i = 0;
         int posFirstSpy  = getRandomNumber(0, players.size());
@@ -276,7 +282,7 @@ public class LobbyActivity extends AppCompatActivity {
 
     // Start Game by clicking in a button
     public void StartGame (View v) throws IOException {
-        // If there arent enought players (4) to start the game, the game wont proceed
+        // If there arent enought playersActive (4) to start the game, the game wont proceed
         if (players.size() < 4) {
             new AlertDialog.Builder(LobbyActivity.this)
                     .setIcon(android.R.drawable.ic_dialog_alert)
