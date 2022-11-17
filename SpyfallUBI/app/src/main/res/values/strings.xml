@@ -84,4 +84,6 @@
     <string name="nameAlreadyExists">This name already exists! Please choose another one.</string>
     <string name="draw1">Draw on the votes! Vote again!</string>
     <string name="draw2">Draw on the votes! Keep playing!</string>
+    <string name="nonSpyRevealLocation">A non-spie tried to reveal the rounds location! Game reset!</string>
+    <string name="playing">Playing:</string>
     </resources>

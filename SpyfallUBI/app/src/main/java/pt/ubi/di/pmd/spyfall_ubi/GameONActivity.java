@@ -156,7 +156,7 @@ public class GameONActivity extends AppCompatActivity {
             goToReavealSpyIntent.putExtra("PLAYERS_COMPLETED", playersCompleted);
             startActivity(goToReavealSpyIntent);
         } else {
-            Toast.makeText(GameONActivity.this, "A non-spie tried to reveal the rounds location! Game reset!",
+            Toast.makeText(GameONActivity.this, getResources().getString(R.string.nonSpyRevealLocation),
                     Toast.LENGTH_LONG).show();
 
             goToLobby(getWindow().getDecorView());
@@ -178,7 +178,7 @@ public class GameONActivity extends AppCompatActivity {
         if(playerPlaying < 0)
             playerPlaying = playersActive.size() - 1;
 
-        TxtViewPlayer.setText("Playing: "+ playersActive.get(playerPlaying).getName());
+        TxtViewPlayer.setText(getResources().getString(R.string.playing)+ " " + playersActive.get(playerPlaying).getName());
     }
 
     // Select next player by clicking on a button
@@ -188,6 +188,6 @@ public class GameONActivity extends AppCompatActivity {
         if(playerPlaying >= playersActive.size())
             playerPlaying = 0;
 
-        TxtViewPlayer.setText("Playing: "+ playersActive.get(playerPlaying).getName());
+        TxtViewPlayer.setText(getResources().getString(R.string.playing)+ " " + playersActive.get(playerPlaying).getName());
     }
 }

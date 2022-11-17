@@ -187,6 +187,7 @@ public class LobbyActivity extends AppCompatActivity {
             players.add(new Player(EditTextPlayerName.getText().toString(), 0, 0));
             adapter.notifyDataSetChanged();
             updateNumberOfSpies();
+            EditTextPlayerName.getText().clear();
         }
     }
 
