@@ -50,14 +50,14 @@ public class GameONActivity extends AppCompatActivity {
             playersCompleted = playersActive;
             place = (Place) getIntent().getSerializableExtra("PLACE");
             playerPlaying = (int) getIntent().getSerializableExtra("PLAYER_STARTING");
-            TxtViewPlayer.setText("Playing: "+ playersActive.get(playerPlaying).getName());
+            TxtViewPlayer.setText(getResources().getString(R.string.playing)+ " " + playersActive.get(playerPlaying).getName());
         }
         if(checkFlag.equals("FROM_REVEALSPY") || checkFlag.equals("FROM_SPYELIMINATED")){
             playersActive = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS");
             place = (Place) getIntent().getSerializableExtra("PLACE");
             playerPlaying = (int) getIntent().getSerializableExtra("PLAYER_PLAYING");
             timeUntilFinishTimer = (long) getIntent().getSerializableExtra("TIMER");
-            TxtViewPlayer.setText("Playing: "+ playersActive.get(playerPlaying).getName());
+            TxtViewPlayer.setText(getResources().getString(R.string.playing)+ " " + playersActive.get(playerPlaying).getName());
             playersCompleted = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
         }
 
