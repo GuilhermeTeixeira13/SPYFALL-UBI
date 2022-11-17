@@ -81,4 +81,7 @@
     <string name="SpyEliminatedAct2">O espião</string>
     <string name="SpyEliminatedAct3">foi eliminado e não pode jogar mais.</string>
     <string name="SpyEliminatedAct4">CONTINUAR JOGO</string>
+    <string name="nameAlreadyExists">Este nome já existe, por favor escolha outro.</string>
+    <string name="draw1">Empate na votação! Vote novamente!</string>
+    <string name="draw2">Empate na votação! Continue a jogar!</string>
 </resources>

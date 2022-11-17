@@ -1,5 +1,7 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
+import static pt.ubi.di.pmd.spyfall_ubi.RevealSpyActivity.containsName;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -23,6 +25,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -170,15 +173,21 @@ public class LobbyActivity extends AppCompatActivity {
         else
             numberOfSpies = 2;
 
-        String spiesString = getResources().getString(R.string.LobbyAct4)+String.valueOf(numberOfSpies);
+        String spiesString = getResources().getString(R.string.LobbyAct4)+numberOfSpies;
         TextViewNumberOfSpies.setText(spiesString);
     }
 
     // Create player and add it to the list
     public void addToList (View v){
-        players.add(new Player(EditTextPlayerName.getText().toString(), 0, 0));
-        adapter.notifyDataSetChanged();
-        updateNumberOfSpies();
+        if (containsName(players, EditTextPlayerName.getText().toString())){
+            Toast.makeText(LobbyActivity.this, getResources().getString(R.string.nameAlreadyExists),
+                    Toast.LENGTH_LONG).show();
+            EditTextPlayerName.getText().clear();
+        } else {
+            players.add(new Player(EditTextPlayerName.getText().toString(), 0, 0));
+            adapter.notifyDataSetChanged();
+            updateNumberOfSpies();
+        }
     }
 
     // Updates CheckBoxResult whenever CheckBoxUBI is clicked (changed)

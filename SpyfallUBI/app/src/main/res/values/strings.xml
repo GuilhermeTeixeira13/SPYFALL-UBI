@@ -81,4 +81,7 @@
     <string name="SpyEliminatedAct2">The spy</string>
     <string name="SpyEliminatedAct3">has been eliminated and can\'t play anymore.</string>
     <string name="SpyEliminatedAct4">KEEP PLAYING</string>
+    <string name="nameAlreadyExists">This name already exists! Please choose another one.</string>
+    <string name="draw1">Draw on the votes! Vote again!</string>
+    <string name="draw2">Draw on the votes! Keep playing!</string>
     </resources>

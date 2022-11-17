@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -63,8 +64,7 @@ public class RevealSpyActivity extends AppCompatActivity {
             timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
             timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
             playersCompleted = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
-            playersKicked = (ArrayList<Player>) playersCompleted.clone();
-            playersKicked.removeAll(playersActive);
+            playersKicked = getKickedPlayers(playersCompleted, playersActive);
         }
 
         TxtViewPlayerVoting = (TextView ) findViewById(R.id.player_name);
@@ -76,6 +76,30 @@ public class RevealSpyActivity extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.listview);
         lv.setAdapter(new MyListAdaper(this, R.layout.list_players, playersActive));
     }
+
+    // Checks if the list of players contains a player with name "name"
+    public static boolean containsName(ArrayList<Player> players, String name) {
+        for(Player o : players) {
+            if(o != null && o.getName().equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // Get the players that are already out of the current game
+    public static ArrayList<Player> getKickedPlayers(ArrayList<Player> completed, ArrayList<Player> active){
+        ArrayList<Player> kicked = new ArrayList<Player>();
+
+        for (int i = 0; i < completed.size(); i++){
+            if (!containsName(active, completed.get(i).getName())) {
+                kicked.add(completed.get(i));
+            }
+        }
+
+        return kicked;
+    }
+
 
     // Inflating the toolbar
     @Override
@@ -185,14 +209,14 @@ public class RevealSpyActivity extends AppCompatActivity {
                             if(timerStr.equals("finish")) {
                                 // We are in the case where the time ended then reset votes and vote again
 
-                                Toast.makeText(RevealSpyActivity.this, "Draw on the votes! Vote again!",
+                                Toast.makeText(RevealSpyActivity.this, getResources().getString(R.string.draw1),
                                         Toast.LENGTH_LONG).show();
                                 finish();
                                 startActivity(getIntent());
                             } else {
                                 // Keep playing
 
-                                Toast.makeText(RevealSpyActivity.this, "Draw on the votes! Keep playing!",
+                                Toast.makeText(RevealSpyActivity.this, getResources().getString(R.string.draw2),
                                         Toast.LENGTH_LONG).show();
                                 goToGame(getWindow().getDecorView());
                             }
@@ -211,13 +235,17 @@ public class RevealSpyActivity extends AppCompatActivity {
                                 if (numSpies > 1) {
                                     // A spy got kicked and the game proceeds
                                     playersActive.remove(playerMaisVotado);
+                                    System.out.println("adicionou a -> "+playersCompleted.get(playerStarting).getName()+" pontos-> "+(playersCompleted.get(playerStarting).getPoints() + 1));
                                     playersCompleted.get(playerStarting).setPoints(playersCompleted.get(playerStarting).getPoints() + 1);
 
                                     goToSpyEliminated(getWindow().getDecorView(), playerMaisVotado);
                                 } else {
                                     // Non spies win
+                                    System.out.println("adicionou a -> "+playersCompleted.get(playerStarting).getName()+" pontos-> "+(playersCompleted.get(playerStarting).getPoints() + 1));
                                     playersCompleted.get(playerStarting).setPoints(playersCompleted.get(playerStarting).getPoints() + 1);
+
                                     points(playersCompleted, playersKicked, 0, 1);
+                                    System.out.println("todos os civis receberam 1 ponto: "+playersCompleted);
 
                                     goToNonSpiesWin(getWindow().getDecorView());
                                 }

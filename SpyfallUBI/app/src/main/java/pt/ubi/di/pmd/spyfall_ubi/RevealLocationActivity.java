@@ -1,5 +1,7 @@
 package pt.ubi.di.pmd.spyfall_ubi;
 
+import static pt.ubi.di.pmd.spyfall_ubi.RevealSpyActivity.getKickedPlayers;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -60,8 +62,7 @@ public class RevealLocationActivity extends AppCompatActivity {
             timer = (long) getIntent().getSerializableExtra("TIMER_LONG");
             timerStr = (String) getIntent().getSerializableExtra("TIMER_STRING");
             playersCompleted = (ArrayList<Player>) getIntent().getSerializableExtra("PLAYERS_COMPLETED");
-            playersKicked = (ArrayList<Player>) playersCompleted.clone();
-            playersKicked.removeAll(playersActive);
+            playersKicked = getKickedPlayers(playersCompleted, playersActive);
         }
 
         // Getting all the places available considering the "game mode" -> UBI or OTHER
