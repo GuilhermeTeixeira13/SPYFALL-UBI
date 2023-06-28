@@ -8,4 +8,9 @@ The basic version of the application should accept the names of all users, rando
 
 The enhanced version of the application should provide highly appealing descriptions for each location (especially considering people who have never been to UBI) with interesting facts, images, and other engaging elements. Consider the possibility of expanding the game to other languages as a way to broaden knowledge and appeal to a wider audience.
 
+## Getting Started
+
+To install the application, please download the file `SpyfallUBI.apk` and proceed to run it on your Android device.
+
 [![SPYFALL DEMO](http://img.youtube.com/vi/YQv5L84mBTA/0.jpg)](https://www.youtube.com/watch?v=YQv5L84mBTA "Watch on Youtube")
+
